@@ -1,9 +1,10 @@
-import React from 'react'
+import MainLayout from "@/components/MainLayout";
+import React from "react";
 
 export default function Marketing() {
   return (
-    <div>
-      marketing
-    </div>
-  )
+    <>
+      <MainLayout>Marketing</MainLayout>
+    </>
+  );
 }
