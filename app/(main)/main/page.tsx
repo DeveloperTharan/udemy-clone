@@ -1,9 +1,17 @@
 import React from "react";
-import { UserButton } from "@clerk/nextjs";
-import MainLayout from "@/components/MainLayout";
+
+import MainHeader from "@/components/MainHeader";
+import Category from "@/components/Category";
+import Footer from "@/components/Footer";
 
 export default function Main() {
   return (
-    <MainLayout>main</MainLayout>
+    <>
+      <MainHeader />
+      <div className="flex flex-col w-full h-full min-h-full px-5">
+        <Category />
+      </div>
+      <Footer />
+    </>
   );
 }

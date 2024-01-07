@@ -38,7 +38,7 @@ const MainHeader = () => {
     <Navbar
       shouldHideOnScroll
       maxWidth="full"
-      className="shadow-lg dark:shadow-slate-800"
+      className="shadow dark:shadow-slate-800"
     >
       <NavbarContent justify="start">
         <NavbarBrand>
@@ -84,7 +84,7 @@ const MainHeader = () => {
           <ShoppingCart className="h-5 w-5" role="button" />
         </NavbarItem>
         {isSignedIn ? (
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
         ) : (
           <>
             <NavbarItem className="hidden lg:flex">
@@ -130,7 +130,7 @@ const MainHeader = () => {
             {isSignedIn ? (
               <DropdownItem>
                 <div className="flex flex-row items-center gap-x-4 w-full">
-                  <UserButton />
+                  <UserButton afterSignOutUrl="/" />
                   <h4>{user?.firstName}</h4>
                 </div>
               </DropdownItem>
