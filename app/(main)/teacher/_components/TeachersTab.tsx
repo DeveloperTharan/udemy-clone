@@ -3,9 +3,10 @@
 import React from "react";
 import { Tabs, Tab } from "@nextui-org/react";
 
+import Analytics from "./Analytics";
+import Courses from "./Courses";
+
 import { BarChart, MenuIcon } from "lucide-react";
-import Analytics from "@/app/(main)/teacher/Analytics/page";
-import Courses from "@/app/(main)/teacher/courses/page";
 
 const TeachersTab = () => {
   const TabMenu = [
