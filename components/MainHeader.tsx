@@ -89,6 +89,7 @@ const MainHeader = () => {
             size="sm"
             variant="ghost"
             onClick={() => router.push("/main")}
+            className={`${pathname === "/" ? "hidden" : "block"} `}
           >
             <LogOut className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
             Exit
@@ -98,6 +99,7 @@ const MainHeader = () => {
             size="sm"
             variant="ghost"
             onClick={() => router.push("/teacher")}
+            className={`${pathname === "/" ? "hidden" : "block"} `}
           >
             Teacher Mode
           </Button>
