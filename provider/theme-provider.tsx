@@ -29,7 +29,6 @@ export const ThemeSwitcher = () => {
     <Switch
       size="sm"
       color="default"
-      className="bg-black"
       startContent={<Moon />}
       endContent={<SunMedium />}
       onChange={handleSetTheme}
