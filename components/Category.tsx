@@ -14,7 +14,7 @@ import {
   Music,
 } from "lucide-react";
 
-const Category = () => {
+const Category = () => { 
   const TabMenu = [
     { id: 1, title: "Finance", icon: <CandlestickChart className="h-4 w-4 text-green-600" /> },
     { id: 2, title: "Computer Science", icon: <Laptop2 className="h-4 w-4 text-blue-600" /> },

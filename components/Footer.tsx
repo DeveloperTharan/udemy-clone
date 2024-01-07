@@ -19,7 +19,7 @@ const Footer = () => {
           height={110}
           className="hidden dark:block"
         />
-        <p className="">Copyright © 2023 - All right reserved by Udemy Ltd</p>
+        <p className="hidden lg:block">Copyright © 2023 - All right reserved by Udemy Ltd</p>
       </aside>
       <nav className="flex flex-row gap-4 md:place-self-center md:justify-self-end">
         <a>

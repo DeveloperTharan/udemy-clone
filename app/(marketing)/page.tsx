@@ -1,11 +1,20 @@
-import Image from "next/image";
+'use client'
+
 import React from "react";
+import Image from "next/image";
 
 import Footer from "@/components/Footer";
 import TabView from "@/components/TabView";
 import MainHeader from "@/components/MainHeader";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function Marketing() {
+  const { isSignedIn } = useAuth();
+  const router = useRouter();
+
+  if(isSignedIn) router.push("/main");
+
   return (
     <>
       <MainHeader />
