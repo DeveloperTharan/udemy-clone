@@ -8,8 +8,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <MainHeader />
-      <Category />
       <Carousel />
+      <Category />
       <div>{children}</div>
       <Footer />
     </>

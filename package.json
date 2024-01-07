@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.1",
     "@nextui-org/react": "^2.2.9",
     "framer-motion": "^10.17.9",
     "lucide": "^0.306.0",

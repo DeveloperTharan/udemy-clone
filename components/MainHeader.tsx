@@ -5,6 +5,13 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 
 import { ThemeSwitcher } from "@/provider/theme-provider";
+import {
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  useAuth,
+  useUser,
+} from "@clerk/nextjs";
 
 import { Search, Heart, ShoppingCart, MoreVertical } from "lucide-react";
 
@@ -24,13 +31,31 @@ import {
 
 const MainHeader = () => {
   const { theme } = useTheme();
+  const { isSignedIn } = useAuth();
+  const { user } = useUser();
 
   return (
-    <Navbar shouldHideOnScroll maxWidth="full" className="shadow-lg dark:shadow-slate-800">
+    <Navbar
+      shouldHideOnScroll
+      maxWidth="full"
+      className="shadow-lg dark:shadow-slate-800"
+    >
       <NavbarContent justify="start">
         <NavbarBrand>
-            <Image src="/logo-black.svg" alt="learn" width={110} height={110} className="dark:hidden" />
-            <Image src="/logo-white.svg" alt="learn" width={110} height={110} className="hidden dark:block" />
+          <Image
+            src="/logo-black.svg"
+            alt="learn"
+            width={110}
+            height={110}
+            className="dark:hidden"
+          />
+          <Image
+            src="/logo-white.svg"
+            alt="learn"
+            width={110}
+            height={110}
+            className="hidden dark:block"
+          />
         </NavbarBrand>
       </NavbarContent>
 
@@ -58,14 +83,22 @@ const MainHeader = () => {
         <NavbarItem>
           <ShoppingCart className="h-5 w-5" role="button" />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
+        {isSignedIn ? (
+          <UserButton />
+        ) : (
+          <>
+            <NavbarItem className="hidden lg:flex">
+              <SignInButton>
+                <Link role="button">Login</Link>
+              </SignInButton>
+            </NavbarItem>
+            <NavbarItem>
+              <Button as={Link} color="primary" variant="flat">
+                <SignUpButton>Sign Up</SignUpButton>
+              </Button>
+            </NavbarItem>
+          </>
+        )}
       </NavbarContent>
 
       <NavbarContent className="md:hidden" justify="end">
@@ -94,12 +127,27 @@ const MainHeader = () => {
                 <h4>Cart</h4>
               </div>
             </DropdownItem>
-            <DropdownItem>
-              <Link href="#">Login</Link>
-            </DropdownItem>
-            <DropdownItem>
-              <Link href="#">SignUp</Link>
-            </DropdownItem>
+            {isSignedIn ? (
+              <DropdownItem>
+                <div className="flex flex-row items-center gap-x-4 w-full">
+                  <UserButton />
+                  <h4>{user?.firstName}</h4>
+                </div>
+              </DropdownItem>
+            ) : (
+              <>
+                <DropdownItem>
+                  <SignInButton>
+                    <Link role="button">Login</Link>
+                  </SignInButton>
+                </DropdownItem>
+                <DropdownItem>
+                  <SignUpButton>
+                    <Link role="button">SignUp</Link>
+                  </SignUpButton>
+                </DropdownItem>
+              </>
+            )}
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
