@@ -1,5 +1,5 @@
 import React from "react";
-import TeachersTab from "./_components/TeachersTab";
+import TeachersTab from "../_components/TeachersTab";
 
 export default function TeacherPage() {
   return (
