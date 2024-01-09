@@ -30,6 +30,13 @@ export default async function CourseIdPage({
 
   const course = await db.course.findUnique({
     where: { id: params.courseId },
+    include: {
+      attachments: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
   });
 
   const category = await db.category.findMany({
@@ -103,10 +110,7 @@ export default async function CourseIdPage({
               <IconBadge icon={File} size={"sm"} />
               <h2 className="text-xl">Resources & Attachments</h2>
             </div>
-           {/*  <AttachmentForm
-                initialData={course}
-                courseId={course.id}
-              /> */}
+            <AttachmentForm initialData={course} courseId={course.id} />
           </div>
         </div>
       </div>
