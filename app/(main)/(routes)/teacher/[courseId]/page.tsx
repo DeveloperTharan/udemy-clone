@@ -57,6 +57,7 @@ export default async function CourseIdPage({
           <TitleForm initialData={course} courseId={course?.id} />
           <DescriptionForm initialData={course} courseId={course?.id} />
           <ImageForm initialData={course} courseId={course.id} />
+          
         </div>
       </div>
     </div>
