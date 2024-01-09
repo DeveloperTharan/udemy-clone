@@ -4,9 +4,10 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 
-import TitleForm from "./_components/TitleForm";
 import { IconBadge } from "@/components/IconBadge";
+import { TitleForm } from "./_components/TitleForm";
 import { ImageForm } from "./_components/ImageForm";
+import { CategoryForm } from "./_components/CategoryForm";
 import { DescriptionForm } from "./_components/DescriptionForm";
 
 import { LayoutDashboard } from "lucide-react";
@@ -22,6 +23,12 @@ export default async function CourseIdPage({
 
   const course = await db.course.findUnique({
     where: { id: params.courseId },
+  });
+
+  const category = await db.category.findMany({
+    orderBy: {
+      name: "asc",
+    },
   });
 
   if (!course) return redirect("/main");
@@ -57,7 +64,14 @@ export default async function CourseIdPage({
           <TitleForm initialData={course} courseId={course?.id} />
           <DescriptionForm initialData={course} courseId={course?.id} />
           <ImageForm initialData={course} courseId={course.id} />
-          
+          <CategoryForm
+            initialData={course}
+            courseId={course.id}
+            options={category.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
+          />
         </div>
       </div>
     </div>

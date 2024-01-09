@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { cn } from "@/lib/utils";
 import { Course } from "@prisma/client";
 
 import { Pencil } from "lucide-react";
@@ -20,21 +21,23 @@ import {
   FormItem,
   FormMessage,
 } from "@/provider/form-provider";
-import { Input } from "@nextui-org/react";
-import { Button } from "@nextui-org/react";
+import { Button, Chip, Select, SelectItem } from "@nextui-org/react";
 
-interface TitleFormProps {
+interface CategoryFormProps {
   initialData: Course;
   courseId: string;
+  options: { label: string; value: string }[];
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required",
-  }),
+  categoryId: z.string().min(1),
 });
 
-export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
+export const CategoryForm = ({
+  initialData,
+  courseId,
+  options,
+}: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
@@ -43,7 +46,9 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      categoryId: initialData?.categoryId || "",
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -59,22 +64,40 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     }
   };
 
+  const selectedOption = options.find(
+    (option) => option.value === initialData.categoryId
+  );
+
   return (
     <div className="mt-6 border dark:border-gray-800 bg-slate-100 dark:bg-gray-950/80 rounded-lg p-4">
       <div className="font-medium flex items-center justify-between">
-        Course title
-        <Button onClick={toggleEdit} variant="ghost" size="sm" className="border-0">
+        Course category
+        <Button
+          onClick={toggleEdit}
+          variant="ghost"
+          size="sm"
+          className="border-0"
+        >
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              Edit description
             </>
           )}
         </Button>
       </div>
-      {!isEditing && <p className="text-sm mt-2">{initialData.title}</p>}
+      {!isEditing && (
+        <p
+          className={cn(
+            "text-sm mt-2",
+            !initialData.categoryId && "text-slate-500 italic"
+          )}
+        >
+          {selectedOption?.label || "No Categorys"}
+        </p>
+      )}
       {isEditing && (
         <Form {...form}>
           <form
@@ -83,15 +106,43 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
           >
             <FormField
               control={form.control}
-              name="title"
+              name="categoryId"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
-                      {...field}
-                    />
+                    <Select
+                      items={options}
+                      label="Select a category"
+                      variant="bordered"
+                      isMultiline={true}
+                      selectionMode="multiple"
+                      placeholder="Select a category"
+                      labelPlacement="outside"
+                      classNames={{
+                        base: "w-full",
+                        trigger: "min-h-unit-12 py-2",
+                      }}
+                      onChange={(value) => {
+                        field.onChange(value);
+                      }}
+                      renderValue={(items) => {
+                        return (
+                          <div className="flex flex-wrap gap-2">
+                            {items.map((item) => (
+                              <Chip key={item.key}>{item.data?.label}</Chip>
+                            ))}
+                          </div>
+                        );
+                      }}
+                    >
+                      {(item) => (
+                        <SelectItem key={item.value} textValue={item.value}>
+                          <div className="flex gap-2 items-center">
+                            <span className="text-small">{item.label}</span>
+                          </div>
+                        </SelectItem>
+                      )}
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

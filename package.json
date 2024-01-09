@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "prisma": {
+    "seed": "node prisma/seed.ts"
+  },
   "dependencies": {
     "@clerk/nextjs": "^4.29.1",
     "@clerk/themes": "^1.7.9",
