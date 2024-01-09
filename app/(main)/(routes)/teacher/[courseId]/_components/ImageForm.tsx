@@ -41,7 +41,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
     } catch {
       toast.error("Something went wrong");
     }
-  };
+  };  
 
   return (
     <div className="mt-6 border dark:border-gray-800 bg-slate-100 dark:bg-gray-950/80 rounded-lg p-4">
