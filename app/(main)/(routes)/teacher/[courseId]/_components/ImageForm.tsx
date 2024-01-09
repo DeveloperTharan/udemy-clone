@@ -47,7 +47,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
     <div className="mt-6 border dark:border-gray-800 bg-slate-100 dark:bg-gray-950/80 rounded-lg p-4">
       <div className="font-medium flex items-center justify-between">
         Course image
-        <Button onClick={toggleEdit} variant="ghost">
+        <Button onClick={toggleEdit} variant="ghost" size="sm" className="border-0">
           {isEditing && <>Cancel</>}
           {!isEditing && !initialData.imageUrl && (
             <>
