@@ -8,10 +8,9 @@ import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Course } from "@prisma/client";
-import { useEdgeStore } from "@/lib/edgestore";
 
 import { Button } from "@nextui-org/react";
-import FileUpload from "@/components/FileUploder";
+import { FileUpload } from "@/components/FileUploder";
 
 import { Pencil, PlusCircle, ImageIcon } from "lucide-react";
 
@@ -33,19 +32,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
 
   const router = useRouter();
 
-  const { edgestore } = useEdgeStore();
-
-  const onSubmit = async (file?: File) => {
-    if (file) {
-      const response = await edgestore.publicFiles.upload({
-        file,
-      });
-
-      uplodeImage({ imageUrl: response.url });
-    }
-  };
-
-  const uplodeImage = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success("Course updated");
@@ -60,7 +47,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
     <div className="mt-6 border dark:border-gray-800 bg-slate-100 dark:bg-gray-950/80 rounded-lg p-4">
       <div className="font-medium flex items-center justify-between">
         Course image
-        <Button onClick={toggleEdit} variant="ghost" size="sm" className="border-0">
+        <Button onClick={toggleEdit} variant="ghost">
           {isEditing && <>Cancel</>}
           {!isEditing && !initialData.imageUrl && (
             <>
@@ -78,7 +65,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       </div>
       {!isEditing &&
         (!initialData.imageUrl ? (
-          <div className="flex items-center justify-center h-60 bg-slate-200 dark:bg-slate-900 rounded-md mt-3">
+          <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
             <ImageIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
@@ -92,10 +79,13 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           </div>
         ))}
       {isEditing && (
-        <div className="mt-4">
+        <div>
           <FileUpload
-            onChange={(file?: File | undefined) => {
-              onSubmit(file);
+            endpoint="courseImage"
+            onChange={(url) => {
+              if (url) {
+                onSubmit({ imageUrl: url });
+              }
             }}
           />
           <div className="text-xs text-muted-foreground mt-4">

@@ -6,8 +6,10 @@ import { auth } from "@clerk/nextjs";
 
 import { IconBadge } from "@/components/IconBadge";
 import { TitleForm } from "./_components/TitleForm";
+import { PriceForm } from "./_components/PriceForm";
 import { ImageForm } from "./_components/ImageForm";
 import { CategoryForm } from "./_components/CategoryForm";
+import { AttachmentForm } from "./_components/AttachmentForm";
 import { DescriptionForm } from "./_components/DescriptionForm";
 
 import {
@@ -16,7 +18,6 @@ import {
   LayoutDashboard,
   ListChecks,
 } from "lucide-react";
-import { PriceForm } from "./_components/PriceForm";
 
 export default async function CourseIdPage({
   params,
@@ -79,25 +80,33 @@ export default async function CourseIdPage({
             }))}
           />
         </div>
-        <div>
-          <div className="flex items-center gap-x-2">
-            <IconBadge icon={ListChecks} size={"sm"} />
-            <h2 className="text-xl">Course Chapters</h2>
+        <div className="space-y-6">
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={ListChecks} size={"sm"} />
+              <h2 className="text-xl">Course chapters</h2>
+            </div>
+            {/* <ChaptersForm
+                initialData={course}
+                courseId={course.id}
+              /> */}
           </div>
-          TODO: chapters
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={CircleDollarSign} size={"sm"} />
               <h2 className="text-xl">Sell your course</h2>
             </div>
             <PriceForm initialData={course} courseId={course.id} />
-            <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={File} size={"sm"} />
-                <h2 className="text-xl">Resources & Attachments</h2>
-              </div>
-              Attachements
+          </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={File} size={"sm"} />
+              <h2 className="text-xl">Resources & Attachments</h2>
             </div>
+           {/*  <AttachmentForm
+                initialData={course}
+                courseId={course.id}
+              /> */}
           </div>
         </div>
       </div>

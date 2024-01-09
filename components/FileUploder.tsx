@@ -1,21 +1,25 @@
 "use client";
 
-import React from "react";
-import { SingleImageDropzone } from "@/provider/SingleImageDropzone ";
+import toast from "react-hot-toast";
+
+import { UploadDropzone } from "@/utils/uploadthing";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 interface FileUploadProps {
-  onChange: (file?: File | undefined) => void | Promise<void>;
+  onChange: (url?: string) => void;
+  endpoint: keyof typeof ourFileRouter;
 }
 
-const FileUpload = ({ onChange }: FileUploadProps) => {
+export const FileUpload = ({ onChange, endpoint }: FileUploadProps) => {
   return (
-    <>
-      <SingleImageDropzone
-        className="w-full h-60 outline-none"
-        onChange={onChange}
-      />
-    </>
+    <UploadDropzone
+      endpoint={endpoint}
+      onClientUploadComplete={(res) => {
+        onChange(res?.map((res) => res.url)?.[0]);
+      }}
+      onUploadError={(error: Error) => {
+        toast.error(`${error?.message}`);
+      }}
+    />
   );
 };
-
-export default FileUpload;

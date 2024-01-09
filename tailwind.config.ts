@@ -1,7 +1,7 @@
-import type { Config } from "tailwindcss";
 import { nextui } from "@nextui-org/react";
+import { withUt } from "uploadthing/tw";
 
-const config: Config = {
+export default withUt({
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,5 +13,4 @@ const config: Config = {
   },
   darkMode: "class",
   plugins: [nextui()],
-};
-export default config;
+});

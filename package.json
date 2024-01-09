@@ -14,13 +14,12 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.1",
     "@clerk/themes": "^1.7.9",
-    "@edgestore/react": "^0.1.6",
-    "@edgestore/server": "^0.1.6",
     "@hookform/resolvers": "^3.3.4",
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.7.1",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@uploadthing/react": "^5.5.0",
     "axios": "^1.6.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -31,10 +30,10 @@
     "next-themes": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.49.2",
     "react-hot-toast": "^2.4.1",
     "tailwind-merge": "^2.2.0",
+    "uploadthing": "^5.5.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {

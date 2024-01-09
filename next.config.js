@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
-    images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'files.edgestore.dev',
-        },
-      ],
-    },
+const nextConfig = {
+  images: {
+    domains: [
+      "utfs.io"
+    ]
   }
+}
+
+module.exports = nextConfig

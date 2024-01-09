@@ -4,7 +4,6 @@ import "./globals.css";
 
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
-import { EdgeStoreProvider } from "@/lib/edgestore";
 import { UiProviders } from "@/provider/ui-provider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -35,7 +34,7 @@ export default function RootLayout({
         >
           <Toaster position="bottom-right" gutter={8} reverseOrder={false} />
           <UiProviders>
-            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+            {children}
           </UiProviders>
         </body>
       </html>
