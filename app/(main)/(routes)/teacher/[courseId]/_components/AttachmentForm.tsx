@@ -97,8 +97,9 @@ export const AttachmentForm = ({
                     <Loader2 className="animate-spin h-4 w-4 ml-auto" />
                   )}
                   {deletingId !== attachment.id && (
-                    <button 
-                      className="ml-auto p-1 bg-gray-900/80 rounded-full hover:bg-red-600 hover:text-white"
+                    <button
+                      className="ml-auto p-1 text-white dark-text-gray-400 bg-slate-400 dark:bg-gray-900/80 
+                      rounded-full hover:bg-red-600 dark:hover:bg-red-600 hover:text-white"
                       onClick={() => onDelete(attachment.id)}
                     >
                       <X className="h-4 w-4" />
