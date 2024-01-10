@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import { Chapter, Course } from "@prisma/client";
 
-import { Loader2, Pencil, PlusCircle } from "lucide-react";
+import { Loader2, PlusCircle } from "lucide-react";
 
 import {
   Form,
@@ -22,6 +22,8 @@ import {
   FormMessage,
 } from "@/provider/form-provider";
 import { Button, Input } from "@nextui-org/react";
+
+import { ChaptersList } from "./ChaptersList";
 
 interface ChaptersFormProps {
     initialData: Course & { chapters: Chapter[] };
@@ -144,14 +146,14 @@ interface ChaptersFormProps {
             !initialData.chapters.length && "text-slate-500 italic"
           )}>
             {!initialData.chapters.length && "No chapters"}
-            {/* <ChaptersList
+            <ChaptersList
               onEdit={onEdit}
               onReorder={onReorder}
               items={initialData.chapters || []}
-            /> */}
+            />
           </div>
         )}
-        {!isCreating && (
+        {!isCreating && initialData.chapters.length > 1 && (
           <p className="text-xs text-muted-foreground mt-4">
             Drag and drop to reorder the chapters
           </p>
