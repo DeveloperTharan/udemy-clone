@@ -18,6 +18,7 @@ import {
   LayoutDashboard,
   ListChecks,
 } from "lucide-react";
+import { ChaptersForm } from "./_components/ChaptersForm";
 
 export default async function CourseIdPage({
   params,
@@ -29,8 +30,13 @@ export default async function CourseIdPage({
   if (!userId) redirect("/main");
 
   const course = await db.course.findUnique({
-    where: { id: params.courseId },
+    where: { id: params.courseId, userId },
     include: {
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       attachments: {
         orderBy: {
           createdAt: "desc",
@@ -53,11 +59,15 @@ export default async function CourseIdPage({
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.chapters.some(chapter => chapter.isPublished),
   ];
 
-  const totalFIelds = requiredFields.length;
-  const completedFields = requiredFields.filter((field) => field !== null);
-  const completionText = `(${completedFields.length}/${totalFIelds})`;
+  const totalFields = requiredFields.length;
+  const completedFields = requiredFields.filter(Boolean).length;
+
+  const completionText = `(${completedFields}/${totalFields})`;
+
+  const isComplete = requiredFields.every(Boolean);
 
   return (
     <div className="w-full h-auto min-h-screen p-10">
@@ -93,10 +103,7 @@ export default async function CourseIdPage({
               <IconBadge icon={ListChecks} size={"sm"} />
               <h2 className="text-xl">Course chapters</h2>
             </div>
-            {/* <ChaptersForm
-                initialData={course}
-                courseId={course.id}
-              /> */}
+            <ChaptersForm initialData={course} courseId={course.id} />
           </div>
           <div>
             <div className="flex items-center gap-x-2">
