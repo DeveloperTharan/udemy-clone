@@ -4,10 +4,11 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
-import { ArrowLeft, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, Eye, LayoutDashboard } from "lucide-react";
 import { IconBadge } from "@/components/IconBadge";
 import { ChapterTitleForm } from "./_components/ChapterTitleForm";
 import { ChapterDescriptionForm } from "./_components/ChapterDescriptionForm";
+import { ChapterAccessForm } from "./_components/ChapterActionForm";
 
 export default async function ChapterId({
   params,
@@ -61,12 +62,6 @@ export default async function ChapterId({
                 Complete all fields {completionText}
               </span>
             </div>
-            {/*  <ChapterActions
-                disabled={!isComplete}
-                courseId={params.courseId}
-                chapterId={params.chapterId}
-                isPublished={chapter.isPublished}
-              /> */}
           </div>
         </div>
       </div>
@@ -88,6 +83,18 @@ export default async function ChapterId({
               chapterId={params.chapterId}
             />
           </div>
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={Eye} size={"sm"} />
+              <h2 className="text-xl">Access Settings</h2>
+            </div>
+            <ChapterAccessForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+          </div>
+          
         </div>
       </div>
     </div>
