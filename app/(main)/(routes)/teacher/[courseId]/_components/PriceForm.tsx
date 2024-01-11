@@ -87,7 +87,7 @@ export const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
             !initialData.price && "text-slate-500 italic"
           )}
         >
-          {`$ ${initialData?.price}` || "No Price couted"}
+          {initialData.price? `$${initialData.price}` : "No price couted"}
         </p>
       )}
       {isEditing && (
