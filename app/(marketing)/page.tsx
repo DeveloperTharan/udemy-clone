@@ -17,7 +17,7 @@ export default function Marketing() {
   return (
     <>
       <MainHeader />
-      <div className="px-2">
+      <div className="px-2 w-full h-auto min-h-screen">
         <Image
           src="/marketing-banner2.jpg"
           alt="learning"
