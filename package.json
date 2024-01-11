@@ -33,6 +33,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
     "react-hot-toast": "^2.4.1",
+    "react-quill": "^2.0.0",
     "tailwind-merge": "^2.2.0",
     "uploadthing": "^5.5.3",
     "zod": "^3.22.4"
