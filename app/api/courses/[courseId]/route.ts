@@ -1,16 +1,21 @@
 /**
- * Updates a course by ID.
+ * API route handlers for PATCH and DELETE operations on a specific course.
  *
- * Authenticates the user and checks if they are authorized to update the course.
- * Fetches the updated course values from the request body.
- * Updates the course in the database matching the course ID and user ID.
- * Returns the updated course object.
- * Handles any errors and returns appropriate responses.
+ * The PATCH handler updates a course by ID, checking auth and validating input.
+ *
+ * The DELETE handler deletes a course by ID, checking auth, validating existence,
+ * deleting associated video assets, and returning the deleted course data.
  */
+import Mux from "@mux/mux-node";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
+
+const { Video } = new Mux(
+  process.env.MUX_TOKEN_ID!,
+  process.env.MUX_TOKEN_SECRET!
+);
 
 export async function PATCH(
   req: Request,
@@ -38,6 +43,54 @@ export async function PATCH(
     return NextResponse.json(course);
   } catch (error) {
     console.log("[COURSE_ID]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { courseId: string } }
+) {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const course = await db.course.findUnique({
+      where: {
+        id: params.courseId,
+        userId: userId,
+      },
+      include: {
+        chapters: {
+          include: {
+            muxData: true,
+          },
+        },
+      },
+    });
+
+    if (!course) {
+      return new NextResponse("Not found", { status: 404 });
+    }
+
+    for (const chapter of course.chapters) {
+      if (chapter.muxData?.assetId) {
+        await Video.Assets.del(chapter.muxData.assetId);
+      }
+    }
+
+    const deletedCourse = await db.course.delete({
+      where: {
+        id: params.courseId,
+      },
+    });
+
+    return NextResponse.json(deletedCourse);
+  } catch (error) {
+    console.log("[COURSE_ID_DELETE]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
