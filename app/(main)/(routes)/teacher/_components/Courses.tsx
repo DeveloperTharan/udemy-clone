@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 
-import { DataTable } from "@/components/Table/Table";
 import axios from "axios";
 import { Category, Course } from "@prisma/client";
 
@@ -27,13 +26,7 @@ export default function Courses() {
 
   return (
     <div className="p-6">
-      <DataTable
-        courses={courses}
-        categories={category.map((category) => ({
-          id: category.id,
-          name: category.name,
-        }))}
-      />
+      
     </div>
   );
 }
