@@ -11,6 +11,8 @@ import { Avatar } from "@nextui-org/react";
 import { Pencil, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { FirstNameForm } from "./FirstNameForm";
+import { LastNameForm } from "./LastNameForm";
 
 const formSchema = z.object({
   imageUrl: z.string().min(1, {
@@ -46,7 +48,7 @@ export const Settings = () => {
             <>
               <Avatar src={user?.imageUrl} className="w-36 h-36 text-large" />
               <div
-                className="p-2 bg-gray-900 hover:bg-gray-800/80 absolute bottom-0 right-3 rounded-full"
+                className="p-2 bg-gray-900 hover:bg-gray-800/80 absolute bottom-0 right-3 rounded-full text-gray-200"
                 role="button"
                 onClick={toggleEdit}
               >
@@ -67,7 +69,7 @@ export const Settings = () => {
                 />
               </div>
               <div
-                className="p-2 bg-gray-900 hover:bg-gray-800/80 absolute top-0 right-0 rounded-full"
+                className="p-2 bg-gray-900 hover:bg-gray-800/80 absolute top-0 right-0 rounded-full text-gray-200"
                 role="button"
                 onClick={toggleEdit}
               >
@@ -87,8 +89,9 @@ export const Settings = () => {
             Add information about yourself
           </p>
         </div>
-        <div className="flex flex-col space-y-4 justify-center items-center p-8">
-          main
+        <div className="flex flex-col space-y-10 justify-center items-center p-8">
+          <FirstNameForm />
+          <LastNameForm/>
         </div>
       </div>
     </div>
