@@ -1,22 +1,34 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeSwitcher } from "@/provider/theme-provider";
 
-import { Button, Input, Link } from "@nextui-org/react";
-import { SignInButton, SignUpButton, UserButton, useAuth } from "@clerk/nextjs";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Link,
+} from "@nextui-org/react";
+import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 
 import { Search, LogOut, X } from "lucide-react";
+import axios from "axios";
+import { User } from "@prisma/client";
+import { useUser } from "@/context/userContext";
 
 const MainHeader = () => {
   const [Open, setOpen] = useState(false);
 
   const pathname = usePathname();
   const router = useRouter();
-
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, signOut } = useAuth();
+  const { user } = useUser();
 
   let isTeaherPage = pathname?.startsWith("/teacher");
   let isPlayerPage = pathname?.includes("/chapter");
@@ -84,29 +96,74 @@ const MainHeader = () => {
         </div>
       </div>
       <div className="flex flex-row justify-start items-center ml-auto gap-x-4">
-        {isTeaherPage || isPlayerPage ? (
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={() => router.push("/main")}
-            className={`${pathname === "/" ? "hidden" : ""} `}
-          >
-            <LogOut className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
-            Exit
-          </Button>
-        ) : (
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={() => router.push("/teacher")}
-            className={`${pathname === "/" ? "hidden" : ""} `}
-          >
-            Teacher Mode
-          </Button>
-        )}
+        {user?.role == "TEACHER" ? (
+          <>
+            {isTeaherPage || isPlayerPage ? (
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => router.push("/main")}
+                className={`${pathname === "/" ? "hidden" : ""} `}
+              >
+                <LogOut className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
+                Exit
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => router.push("/teacher")}
+                className={`${pathname === "/" ? "hidden" : ""} `}
+              >
+                Teacher Mode
+              </Button>
+            )}
+          </>
+        ) : null}
         <ThemeSwitcher />
         {isSignedIn ? (
-          <UserButton afterSignOutUrl="/" />
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger>
+              <Avatar
+                isBordered
+                as="button"
+                className="transition-transform"
+                color="secondary"
+                name={user?.firstName}
+                size="sm"
+                src={user?.imageURL}
+              />
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Profile Actions" variant="flat">
+              <DropdownItem key="profile" className="h-14 gap-2">
+                <p className="text-gray-500 dark:text-gray-400">Signed in as</p>
+                <p className="font-semibold truncate">{user?.email}</p>
+              </DropdownItem>
+              <DropdownItem
+                key="dashboard"
+                onClick={() => router.push("/studentdashboard")}
+              >
+                Dashboard
+              </DropdownItem>
+              <DropdownItem
+                key="settings"
+                onClick={() => router.push("/usersettings")}
+                className={`${user?.role == "TEACHER" ? "hidden" : ""}`}
+              >
+                Settings
+              </DropdownItem>
+              <DropdownItem key="help_and_feedback">
+                Help & Feedback
+              </DropdownItem>
+              <DropdownItem
+                key="logout"
+                color="danger"
+                onClick={() => signOut().then(() => router.push("/"))}
+              >
+                Log Out
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         ) : (
           <>
             <div className="hidden lg:flex">

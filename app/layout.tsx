@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
 import { UiProviders } from "@/provider/ui-provider";
+import UserProvider from "@/context/userContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,7 +35,7 @@ export default function RootLayout({
         >
           <Toaster position="bottom-right" gutter={8} reverseOrder={false} />
           <UiProviders>
-            {children}
+            <UserProvider>{children}</UserProvider>
           </UiProviders>
         </body>
       </html>
