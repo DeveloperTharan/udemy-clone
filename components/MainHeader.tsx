@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeSwitcher } from "@/provider/theme-provider";
@@ -18,8 +18,6 @@ import {
 import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 
 import { Search, LogOut, X } from "lucide-react";
-import axios from "axios";
-import { User } from "@prisma/client";
 import { useUser } from "@/context/userContext";
 
 const MainHeader = () => {
@@ -131,7 +129,7 @@ const MainHeader = () => {
                 color="secondary"
                 name={user?.firstName}
                 size="sm"
-                src={user?.imageURL}
+                src={user?.imageUrl}
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
@@ -141,13 +139,13 @@ const MainHeader = () => {
               </DropdownItem>
               <DropdownItem
                 key="dashboard"
-                onClick={() => router.push("/studentdashboard")}
+                onClick={() => router.push("/student/dashboard")}
               >
                 Dashboard
               </DropdownItem>
               <DropdownItem
                 key="settings"
-                onClick={() => router.push("/usersettings")}
+                onClick={() => router.push("/settings")}
                 className={`${user?.role == "TEACHER" ? "hidden" : ""}`}
               >
                 Settings

@@ -62,12 +62,12 @@ export async function POST(req: Request) {
 
   // if user created then pass the following data to the Database
   if (eventType === "user.created") {
-    const user = await db.user.create({
+    await db.user.create({
       data: {
         userId: payload?.data?.id,
         firstName: payload?.data?.first_name,
         lastName: payload?.data?.last_name,
-        imageURL: payload?.data?.image_url,
+        imageUrl: payload?.data?.image_url,
         email: payload?.data?.email_addresses[0]?.email_address,
       },
     });

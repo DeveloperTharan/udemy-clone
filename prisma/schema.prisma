@@ -13,16 +13,13 @@ datasource db {
 model User {
   id        String @id @default(uuid())
   userId    String @unique
-  userName  String?
   email     String @unique
-  imageURL  String
+  imageUrl  String @db.Text
   firstName String
   lastName  String
   role      Role   @default(STUDENT)
 
   desription String? @db.Text
-  skillId    String?
-  skills     Skills? @relation(fields: [skillId], references: [skill])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -31,12 +28,6 @@ model User {
 enum Role {
   STUDENT
   TEACHER
-}
-
-model Skills {
-  id    String @id @default(uuid())
-  skill String @unique
-  user  User[]
 }
 
 model Course {
