@@ -13,6 +13,7 @@ import axios from "axios";
 import { FirstNameForm } from "./FirstNameForm";
 import { LastNameForm } from "./LastNameForm";
 import { User } from "@prisma/client";
+import { DescriptionForm } from "./DescriptionForm";
 
 const formSchema = z.object({
   imageUrl: z.string().min(1, {
@@ -93,6 +94,7 @@ export const Settings = ({ initialData }: { initialData: User | null }) => {
         <div className="flex flex-col space-y-10 justify-center items-center p-8">
           <FirstNameForm initialData={initialData} />
           <LastNameForm initialData={initialData} />
+          <DescriptionForm initialData={initialData} />
         </div>
       </div>
     </div>
