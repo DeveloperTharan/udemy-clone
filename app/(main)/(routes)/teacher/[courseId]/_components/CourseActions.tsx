@@ -35,6 +35,7 @@ export const CourseActions = ({
         toast.success("Course unpublished");
       } else {
         await axios.patch(`/api/courses/${courseId}/publish`);
+        router.push('/teacher');
         toast.success("Course published");
       }
 

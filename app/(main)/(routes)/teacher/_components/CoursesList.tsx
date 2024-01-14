@@ -1,34 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
-import {Card, CardHeader, CardBody, CardFooter, Image} from "@nextui-org/react";
-import { Category, Course } from '@prisma/client';
+import { Category, Course } from "@prisma/client";
+import { DataTable } from "@/components/Table/DataTable";
 
 interface CoursesList {
-    courses: Course[]
-    category: Category[]
+  courses: Course[];
+  category: Category[];
 }
 
-export const CoursesList = ({ courses, category } : CoursesList) => {
+export const CoursesList = ({ courses, category }: CoursesList) => {
+  const [categoryData, setCategoryData] = useState<
+    { key: string; value: string }[]
+  >([]);
+
+  useEffect(() => {
+    const res = category.map((category) => ({
+      key: category.id,
+      value: category.name,
+    }));
+
+    setCategoryData(res);
+  }, [category]);
+
   return (
-    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
-      {courses.map((item, index) => (
-        <Card shadow="sm" key={index} isPressable onPress={() => console.log("item pressed")}>
-          <CardBody className="overflow-visible p-2">
-            <Image
-              radius="lg"
-              width="100%"
-              height={"500px"}
-              alt={item.title}
-              className="w-full object-cover h-[140px]"
-              src={item.imageUrl!}
-            />
-          </CardBody>
-          <CardFooter className="text-small justify-between">
-            <b>{item.title}</b>
-            <p className="text-default-500">{item.price}</p>
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
-  )
-}
+    <DataTable courseData={courses} categoryData={categoryData} />
+  );
+};

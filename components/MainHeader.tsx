@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeSwitcher } from "@/provider/theme-provider";
 
@@ -13,7 +14,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
-  Link,
+  Link as Linked,
 } from "@nextui-org/react";
 import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 
@@ -37,20 +38,24 @@ const MainHeader = () => {
       dark:shadow-slate-800"
     >
       <div className="flex flex-row justify-start items-center mr-auto gap-x-2 lg:gap-x-10">
-        <Image
-          src="/logo-black.svg"
-          alt="learn"
-          width={110}
-          height={110}
-          className="dark:hidden"
-        />
-        <Image
-          src="/logo-white.svg"
-          alt="learn"
-          width={110}
-          height={110}
-          className="hidden dark:block"
-        />
+        <Link href={"/main"}>
+          <Image
+            src="/logo-black.svg"
+            alt="learn"
+            width={110}
+            height={110}
+            className="dark:hidden"
+          />
+        </Link>
+        <Link href={"/main"}>
+          <Image
+            src="/logo-white.svg"
+            alt="learn"
+            width={110}
+            height={110}
+            className="hidden dark:block"
+          />
+        </Link>
         <div className={`${isTeaherPage || isPlayerPage ? "hidden" : ""}`}>
           <Input
             type="text"
@@ -166,7 +171,7 @@ const MainHeader = () => {
           <>
             <div className="hidden lg:flex">
               <SignInButton>
-                <Link role="button">Login</Link>
+                <Linked role="button">Login</Linked>
               </SignInButton>
             </div>
             <div className="hidden md:flex">

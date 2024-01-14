@@ -23,7 +23,7 @@ export const TeacherInfo = () => {
         </h1>
         <p
           className={cn(
-            "text-lg font-normal italic",
+            "text-sm text-gray-400 font-normal italic",
             !user?.desription && "text-gray-600"
           )}
         >
