@@ -140,13 +140,13 @@ const MainHeader = () => {
               <DropdownItem
                 key="dashboard"
                 onClick={() => router.push("/student/dashboard")}
+                className={`${user?.role == "TEACHER" ? "hidden" : ""}`}
               >
                 Dashboard
               </DropdownItem>
               <DropdownItem
                 key="settings"
                 onClick={() => router.push("/settings")}
-                className={`${user?.role == "TEACHER" ? "hidden" : ""}`}
               >
                 Settings
               </DropdownItem>
