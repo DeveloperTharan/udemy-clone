@@ -4,11 +4,14 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 
+import { Banner } from "@/components/Banner";
 import { IconBadge } from "@/components/IconBadge";
 import { TitleForm } from "./_components/TitleForm";
 import { PriceForm } from "./_components/PriceForm";
 import { ImageForm } from "./_components/ImageForm";
 import { CategoryForm } from "./_components/CategoryForm";
+import { ChaptersForm } from "./_components/ChaptersForm";
+import { CourseActions } from "./_components/CourseActions";
 import { AttachmentForm } from "./_components/AttachmentForm";
 import { DescriptionForm } from "./_components/DescriptionForm";
 
@@ -18,9 +21,6 @@ import {
   LayoutDashboard,
   ListChecks,
 } from "lucide-react";
-import { ChaptersForm } from "./_components/ChaptersForm";
-import { Banner } from "@/components/Banner";
-import { CourseActions } from "./_components/CourseActions";
 
 export default async function CourseIdPage({
   params,

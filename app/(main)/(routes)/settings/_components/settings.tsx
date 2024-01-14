@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import * as z from "zod";
 import toast from "react-hot-toast";
 
-import { useUser } from "@/context/userContext";
 import { FileUpload } from "@/components/FileUploder";
 
 import { Avatar } from "@nextui-org/react";
@@ -13,6 +12,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { FirstNameForm } from "./FirstNameForm";
 import { LastNameForm } from "./LastNameForm";
+import { User } from "@prisma/client";
 
 const formSchema = z.object({
   imageUrl: z.string().min(1, {
@@ -20,10 +20,8 @@ const formSchema = z.object({
   }),
 });
 
-export const Settings = () => {
+export const Settings = ({ initialData }: { initialData: User | null }) => {
   const [edit, setEdit] = useState<boolean>(false);
-
-  const { user } = useUser();
 
   const router = useRouter();
 
@@ -31,7 +29,7 @@ export const Settings = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/userdata/${user?.id}`, values);
+      await axios.patch(`/api/userdata/${initialData?.id}`, values);
       toast.success("Image updated");
       toggleEdit();
       router.refresh();
@@ -46,7 +44,10 @@ export const Settings = () => {
         <div className="relative">
           {!edit && (
             <>
-              <Avatar src={user?.imageUrl} className="w-36 h-36 text-large" />
+              <Avatar
+                src={initialData?.imageUrl}
+                className="w-36 h-36 text-large"
+              />
               <div
                 className="p-2 bg-gray-900 hover:bg-gray-800/80 absolute bottom-0 right-3 rounded-full text-gray-200"
                 role="button"
@@ -79,7 +80,7 @@ export const Settings = () => {
           )}
         </div>
         <h2 className="font-semibold text-sm text-center">
-          {user?.firstName} {user?.lastName}
+          {initialData?.firstName} {initialData?.lastName}
         </h2>
       </div>
       <div className="w-full">
@@ -90,8 +91,8 @@ export const Settings = () => {
           </p>
         </div>
         <div className="flex flex-col space-y-10 justify-center items-center p-8">
-          <FirstNameForm />
-          <LastNameForm/>
+          <FirstNameForm initialData={initialData} />
+          <LastNameForm initialData={initialData} />
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ import {
 } from "@/provider/form-provider";
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import { useUser } from "@/context/userContext";
+import { User } from "@prisma/client";
 
 const formSchema = z.object({
   lastName: z.string().min(1, {
@@ -26,18 +26,17 @@ const formSchema = z.object({
   }),
 });
 
-export const LastNameForm = () => {
+export const LastNameForm = ({ initialData }: { initialData: User | null }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
-  const { user } = useUser();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      lastName: user?.lastName ?? "",
+      lastName: initialData?.lastName ?? "",
     },
   });
 
@@ -45,7 +44,7 @@ export const LastNameForm = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/userdata/${user?.id}`, values);
+      await axios.patch(`/api/userdata/${initialData?.id}`, values);
       toast.success("Course updated");
       toggleEdit();
       router.refresh();
@@ -61,7 +60,7 @@ export const LastNameForm = () => {
           className="w-full border-[2px] border-gray-200 dark:border-gray-600 h-14 
             rounded-xl text-start px-4 flex items-center justify-between group"
         >
-          <h4 className="">{user?.lastName}</h4>
+          <h4 className="">{initialData?.lastName}</h4>
           <Button
             variant="solid"
             className="bg-black text-white dark:bg-white dark:text-black opacity-0 group-hover:opacity-100"
@@ -89,21 +88,21 @@ export const LastNameForm = () => {
                       placeholder="e.g. 'Joes'"
                       endContent={
                         <div className="flex flex-row gap-x-2">
-                            <Button
-                          disabled={!isValid || isSubmitting}
-                          type="submit"
-                          variant="solid"
-                          className="bg-black text-white dark:bg-white dark:text-black"
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          variant="solid"
-                          className="bg-black text-white dark:bg-white dark:text-black"
-                          onClick={toggleEdit}
-                        >
-                          cancel
-                        </Button>
+                          <Button
+                            disabled={!isValid || isSubmitting}
+                            type="submit"
+                            variant="solid"
+                            className="bg-black text-white dark:bg-white dark:text-black"
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            variant="solid"
+                            className="bg-black text-white dark:bg-white dark:text-black"
+                            onClick={toggleEdit}
+                          >
+                            cancel
+                          </Button>
                         </div>
                       }
                       {...field}
@@ -119,3 +118,4 @@ export const LastNameForm = () => {
     </div>
   );
 };
+;
