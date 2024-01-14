@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Category, Course } from "@prisma/client";
 import { CoursesList } from "./CoursesList";
+import { TeacherInfo } from "./TeacherInfo";
 
 export default function Courses() {
   const [data, setData] = useState<[Course[], Category[]]>([[], []]);
@@ -27,6 +28,7 @@ export default function Courses() {
 
   return (
     <div className="p-6">
+      <TeacherInfo/>
       <CoursesList courses={courses} category={category} />
     </div>
   );

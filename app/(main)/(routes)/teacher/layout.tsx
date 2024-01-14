@@ -1,13 +1,29 @@
-import { IsTeacher } from "./_components/isTeacher";
+import React from "react";
+import { redirect } from "next/navigation";
 
-export default function TeacherPage({
+import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs";
+
+export default async function TeacherPage({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { userId } = auth();
+
+  if (!userId) redirect("/main");
+
+  const user = await db.user.findUnique({
+    where: { userId },
+  });
+
+  if (user?.role !== "TEACHER") {
+    return redirect("/main");
+  }
+
   return (
     <>
-      <IsTeacher>{children}</IsTeacher>
+      {children}
     </>
   );
 }
