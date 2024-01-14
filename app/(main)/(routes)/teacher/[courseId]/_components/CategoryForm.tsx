@@ -21,11 +21,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/provider/form-provider";
-import {
-  Autocomplete,
-  AutocompleteItem,
-  Button,
-} from "@nextui-org/react";
+import { Button, Chip, Select, SelectItem } from "@nextui-org/react";
 
 interface CategoryFormProps {
   initialData: Course;
@@ -114,18 +110,39 @@ export const CategoryForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Autocomplete
-                      defaultItems={options}
-                      label="Category"
-                      placeholder="Search an category"
-                      className="w-full"
+                    <Select
+                      items={options}
+                      label="Select a category"
+                      variant="bordered"
+                      isMultiline={true}
+                      selectionMode="single"
+                      placeholder="Select a category"
+                      labelPlacement="outside"
+                      classNames={{
+                        base: "w-full",
+                        trigger: "min-h-unit-12 py-2",
+                      }}
+                      onChange={(value) => {
+                        field.onChange(value);
+                      }}
+                      renderValue={(items) => {
+                        return (
+                          <div className="flex flex-wrap gap-2">
+                            {items.map((item) => (
+                              <Chip key={item.key}>{item.data?.label}</Chip>
+                            ))}
+                          </div>
+                        );
+                      }}
                     >
-                      {(category) => (
-                        <AutocompleteItem key={category.value}>
-                          {category.label}
-                        </AutocompleteItem>
+                      {(item) => (
+                        <SelectItem key={item.value} textValue={item.value}>
+                          <div className="flex gap-2 items-center">
+                            <span className="text-small">{item.label}</span>
+                          </div>
+                        </SelectItem>
                       )}
-                    </Autocomplete>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
