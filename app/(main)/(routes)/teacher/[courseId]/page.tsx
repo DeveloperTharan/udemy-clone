@@ -16,11 +16,13 @@ import { AttachmentForm } from "./_components/AttachmentForm";
 import { DescriptionForm } from "./_components/DescriptionForm";
 
 import {
+  ArrowLeft,
   CircleDollarSign,
   File,
   LayoutDashboard,
   ListChecks,
 } from "lucide-react";
+import Link from "next/link";
 
 export default async function CourseIdPage({
   params,
@@ -78,7 +80,14 @@ export default async function CourseIdPage({
       )}
       <div className="w-full h-auto min-h-screen p-10">
         <div className="flex items-center justify-between">
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col gap-y-2"> 
+          <Link
+            href={`/teacher`}
+            className="flex items-center text-sm hover:opacity-75 transition mb-6"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Dashboard
+          </Link>
             <h1 className="text-2xl font-medium">Course setup</h1>
             <span className="text-sm text-slate-700">
               Complete all fields {completionText}

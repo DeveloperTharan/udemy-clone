@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -6,20 +6,45 @@ import { cn } from "@/lib/utils";
 
 import { Course } from "@prisma/client";
 
-import { MoreVertical, PlusIcon, SearchIcon } from "lucide-react";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Input, Button, DropdownTrigger, Dropdown, DropdownMenu, DropdownItem, Chip, Pagination, Selection, SortDescriptor, } from "@nextui-org/react";
+import {
+  DeleteIcon,
+  EditIcon,
+  EyeIcon,
+  PlusIcon,
+  SearchIcon,
+  Trash,
+  Trash2,
+} from "lucide-react";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Input,
+  Button,
+  Chip,
+  Pagination,
+  Selection,
+  SortDescriptor,
+  Tooltip,
+} from "@nextui-org/react";
 
 interface DataTableProps {
   courseData: Course[];
   categoryData: { key: string; value: string }[];
 }
 
-export const DataTable = ({ courseData, categoryData, }: DataTableProps) => {
+export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [filterValue, setFilterValue] = useState("");
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set([]));
-  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({ column: "title", direction: "ascending", });
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
+    column: "title",
+    direction: "ascending",
+  });
 
   const router = useRouter();
 
@@ -110,14 +135,19 @@ export const DataTable = ({ courseData, categoryData, }: DataTableProps) => {
             onValueChange={onSearchChange}
             size="sm"
           />
-          <Button color="primary" endContent={<PlusIcon />}onClick={() => router.push("/teacher/create")} size="md">
+          <Button
+            color="primary"
+            endContent={<PlusIcon />}
+            onClick={() => router.push("/teacher/create")}
+            size="md"
+          >
             create
           </Button>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">
+          <div className="text-default-400 text-small">
             Total {courseData.length} courses
-          </span>
+          </div>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -132,16 +162,22 @@ export const DataTable = ({ courseData, categoryData, }: DataTableProps) => {
         </div>
       </div>
     );
-  }, [ filterValue, onSearchChange, onRowsPerPageChange, courseData.length, hasSearchFilter, ]);
+  }, [
+    filterValue,
+    onSearchChange,
+    onRowsPerPageChange,
+    courseData.length,
+    hasSearchFilter,
+  ]);
 
   const bottomContent = useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
+        <div className="w-[30%] text-small text-default-400">
           {selectedKeys === "all"
             ? "All items selected"
             : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span>
+        </div>
         <Pagination
           isCompact
           showControls
@@ -214,20 +250,26 @@ export const DataTable = ({ courseData, categoryData, }: DataTableProps) => {
                 {item.isPublished ? "Published" : "UnPubished"}
               </Chip>
             </TableCell>
-            <TableCell>
-              <div className="relative flex justify-start items-center gap-2">
-                <Dropdown>
-                  <DropdownTrigger>
-                    <Button isIconOnly size="sm" variant="light">
-                      <MoreVertical className="text-default-300" />
-                    </Button>
-                  </DropdownTrigger>
-                  <DropdownMenu>
-                    <DropdownItem>View</DropdownItem>
-                    <DropdownItem>Edit</DropdownItem>
-                    <DropdownItem>Delete</DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+            <TableCell className="w-28">
+              <div className="relative flex items-center gap-4">
+                <Tooltip content="Details">
+                  <div className="w-full h-full text-default-400 cursor-pointer active:opacity-50">
+                    <EyeIcon size={18} />
+                  </div>
+                </Tooltip>
+                <Tooltip content="Edit course">
+                  <div
+                    className="w-full h-full text-blue-600 cursor-pointer active:opacity-50"
+                    onClick={() => router.push(`/teacher/${item.id}`)}
+                  >
+                    <EditIcon size={18} />
+                  </div>
+                </Tooltip>
+                <Tooltip color="danger" content="Delete course">
+                  <div className="w-full h-full text-danger cursor-pointer active:opacity-50">
+                    <Trash size={18} />
+                  </div>
+                </Tooltip>
               </div>
             </TableCell>
           </TableRow>
