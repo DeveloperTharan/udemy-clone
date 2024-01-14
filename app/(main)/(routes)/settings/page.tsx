@@ -14,7 +14,7 @@ export default async function SettingsPage() {
   })
 
   return (
-    <div className='w-full h-auto min-h-screen px-20 lg:px-32 py-10'>
+    <div className='w-full h-auto min-h-screen px-10 lg:px-32 py-10'>
         <Settings initialData={userData} />
     </div>
   )
