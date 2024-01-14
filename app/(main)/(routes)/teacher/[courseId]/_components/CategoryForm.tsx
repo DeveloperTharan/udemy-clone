@@ -21,7 +21,11 @@ import {
   FormItem,
   FormMessage,
 } from "@/provider/form-provider";
-import { Button, Chip, Select, SelectItem } from "@nextui-org/react";
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Button,
+} from "@nextui-org/react";
 
 interface CategoryFormProps {
   initialData: Course;
@@ -110,39 +114,18 @@ export const CategoryForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Select
-                      items={options}
-                      label="Select a category"
-                      variant="bordered"
-                      isMultiline={true}
-                      selectionMode="multiple"
-                      placeholder="Select a category"
-                      labelPlacement="outside"
-                      classNames={{
-                        base: "w-full",
-                        trigger: "min-h-unit-12 py-2",
-                      }}
-                      onChange={(value) => {
-                        field.onChange(value);
-                      }}
-                      renderValue={(items) => {
-                        return (
-                          <div className="flex flex-wrap gap-2">
-                            {items.map((item) => (
-                              <Chip key={item.key}>{item.data?.label}</Chip>
-                            ))}
-                          </div>
-                        );
-                      }}
+                    <Autocomplete
+                      defaultItems={options}
+                      label="Category"
+                      placeholder="Search an category"
+                      className="w-full"
                     >
-                      {(item) => (
-                        <SelectItem key={item.value} textValue={item.value}>
-                          <div className="flex gap-2 items-center">
-                            <span className="text-small">{item.label}</span>
-                          </div>
-                        </SelectItem>
+                      {(category) => (
+                        <AutocompleteItem key={category.value}>
+                          {category.label}
+                        </AutocompleteItem>
                       )}
-                    </Select>
+                    </Autocomplete>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
