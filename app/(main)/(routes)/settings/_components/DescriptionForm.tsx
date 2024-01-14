@@ -36,7 +36,7 @@ export const DescriptionForm = ({ initialData } : { initialData: User | null }) 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: initialData?.desription ?? "",
+      desription: initialData?.desription ?? "",
     },
   });
 

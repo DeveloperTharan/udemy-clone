@@ -1,19 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+
+import axios from "axios";
 import * as z from "zod";
 import toast from "react-hot-toast";
 
+import { User } from "@prisma/client";
+import { RoleForm } from "./RoleForm";
+import { LastNameForm } from "./LastNameForm";
+import { FirstNameForm } from "./FirstNameForm";
+import { DescriptionForm } from "./DescriptionForm";
 import { FileUpload } from "@/components/FileUploder";
 
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Chip } from "@nextui-org/react";
+
 import { Pencil, X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { FirstNameForm } from "./FirstNameForm";
-import { LastNameForm } from "./LastNameForm";
-import { User } from "@prisma/client";
-import { DescriptionForm } from "./DescriptionForm";
 
 const formSchema = z.object({
   imageUrl: z.string().min(1, {
@@ -41,7 +44,7 @@ export const Settings = ({ initialData }: { initialData: User | null }) => {
 
   return (
     <div className="flex flex-row space-x-10 w-full">
-      <div className="flex flex-col space-y-4 justify-center items-center p-8">
+      <div className="flex flex-col space-y-4 justify-center items-center p-8 mb-auto">
         <div className="relative">
           {!edit && (
             <>
@@ -83,6 +86,14 @@ export const Settings = ({ initialData }: { initialData: User | null }) => {
         <h2 className="font-semibold text-sm text-center">
           {initialData?.firstName} {initialData?.lastName}
         </h2>
+        <div className="relative flex flex-col space-y-2 items-start justify-start">
+          <h4 className="text-gray-500 text-sm">
+            Role :{" "}
+            <Chip>
+              {initialData?.role}
+            </Chip>
+          </h4>
+        </div>
       </div>
       <div className="w-full">
         <div className="flex flex-col items-center justify-center border-b p-4 w-full dark:border-gray-700 gap-y-3">
@@ -91,10 +102,23 @@ export const Settings = ({ initialData }: { initialData: User | null }) => {
             Add information about yourself
           </p>
         </div>
-        <div className="flex flex-col space-y-10 justify-center items-center p-8">
-          <FirstNameForm initialData={initialData} />
-          <LastNameForm initialData={initialData} />
-          <DescriptionForm initialData={initialData} />
+        <div className="flex flex-col space-y-7 justify-center items-center p-8">
+          <div className="flex flex-col items-start justify-start space-y-2 w-full">
+            <h2 className="text-sm text-gray-500">FirstName</h2>
+            <FirstNameForm initialData={initialData} />
+          </div>
+          <div className="flex flex-col items-start justify-start space-y-2 w-full">
+            <h2 className="text-sm text-gray-500">LastName</h2>
+            <LastNameForm initialData={initialData} />
+          </div>
+          <div className="flex flex-col items-start justify-start space-y-2 w-full">
+            <h2 className="text-sm text-gray-500">Description</h2>
+            <DescriptionForm initialData={initialData} />
+          </div>
+          <div className="flex flex-col items-start justify-start space-y-2 w-full">
+            <h2 className="text-sm text-gray-500">Your Role</h2>
+            <RoleForm initialData={initialData} />
+          </div>
         </div>
       </div>
     </div>
