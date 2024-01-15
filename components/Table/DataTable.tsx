@@ -134,6 +134,7 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
             onClear={() => onClear()}
             onValueChange={onSearchChange}
             size="sm"
+            radius="full"
           />
           <Button
             color="primary"

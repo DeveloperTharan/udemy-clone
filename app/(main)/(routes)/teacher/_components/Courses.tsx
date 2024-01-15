@@ -29,7 +29,7 @@ export default function Courses() {
   return (
     <div className="p-6">
       <TeacherInfo/>
-      <div className="mt-10">
+      <div className="mt-16">
       <CoursesList courses={courses} category={category} />
       </div>
     </div>

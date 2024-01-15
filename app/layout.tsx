@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
 import { Toaster } from "react-hot-toast";
@@ -7,7 +7,12 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { UiProviders } from "@/provider/ui-provider";
 import UserProvider from "@/context/userContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin', 'greek', 'cyrillic'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "Udemy",
@@ -31,7 +36,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`w-full max-w-[1440px] h-auto min-h-full mx-auto ${inter.className}`}
+          className={`w-full max-w-[1440px] h-auto min-h-full mx-auto ${roboto.className}`}
         >
           <Toaster position="bottom-right" gutter={8} reverseOrder={false} />
           <UiProviders>
