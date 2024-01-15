@@ -20,16 +20,18 @@ interface CourseListProps {
 
 export const CourseList = ({ coursesData }: CourseListProps) => {
   return (
-    <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
+    <div className="flex flex-row relative w-full h-fit flex-nowrap whitespace-nowrap 
+    overflow-x-auto scrollbar-default gap-x-2">
       {coursesData.map((item, index) => (
-        <Link href={`/course/${item.id}`}>
+        <Link href={`/course/${item.id}`} key={item.id}>
           <Card
             shadow="sm"
             key={index}
             isPressable
             onPress={() => console.log("item pressed")}
+            className="border dark:border-0"
           >
-            <CardBody className="overflow-visible p-2">
+            <CardBody className="overflow-visible p-2 w-full">
               <Image
                 shadow="sm"
                 radius="lg"
