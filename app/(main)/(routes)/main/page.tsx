@@ -10,6 +10,11 @@ export default async function Main() {
     where: {
       isPublished: true,
     },
+    include: {
+      category: true,
+      chapters: true,
+      purchases: true,
+    },
     take: 10,
   });
 
@@ -18,8 +23,6 @@ export default async function Main() {
       name: "desc",
     },
   });
-
-  const chapters = await db.chapter.findMany();
 
   return (
     <div className="flex flex-col w-full h-auto min-h-screen">
@@ -40,11 +43,14 @@ export default async function Main() {
             </span>
           </h4>
           <CourseList
-            courses={course}
-            chapters={chapters}
-            category={category.map((category) => ({
-              id: category.id,
-              name: category.name,
+            coursesData={course.map((data) => ({
+              id: data.id,
+              title: data.title,
+              imageUrl: data.imageUrl,
+              category: data.category?.name,
+              chapters: data.chapters.length,
+              price: data.price,
+              purchased: data.purchases.map(data => data.id)
             }))}
           />
         </div>
