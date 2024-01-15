@@ -21,6 +21,8 @@ model User {
 
   desription String? @db.Text
 
+  courses Course? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -45,6 +47,7 @@ model Course {
   chapters    Chapter[]
   attachments Attachment[]
   purchases   Purchase[]
+  auther     User[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -86,8 +89,6 @@ model Chapter {
   courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
-  userProgress UserProgress[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -101,22 +102,6 @@ model MuxData {
 
   chapterId String  @unique
   chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-}
-
-model UserProgress {
-  id     String @id @default(uuid())
-  userId String
-
-  chapterId String
-  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-
-  isCompleted Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([userId, chapterId])
-  @@index([chapterId])
 }
 
 model Purchase {
