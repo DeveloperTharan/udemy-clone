@@ -48,6 +48,8 @@ export const RoleForm = ({ initialData }: { initialData: User | null }) => {
       toast.success("Course updated");
       toggleEdit();
       router.refresh();
+      //@ts-ignore
+      window.location.reload();
     } catch {
       toast.error("Something went wrong");
     }
