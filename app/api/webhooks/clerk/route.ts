@@ -64,10 +64,10 @@ export async function POST(req: Request) {
   if (eventType === "user.created") {
     await db.user.create({
       data: {
-        userId: payload?.data?.id,
-        firstName: payload?.data?.first_name,
-        lastName: payload?.data?.last_name,
-        imageUrl: payload?.data?.image_url,
+        userId: payload?.data?.id, 
+        firstName: payload?.data?.first_name || "",
+        lastName: payload?.data?.last_name || "",
+        imageUrl: payload?.data?.image_url || "",
         email: payload?.data?.email_addresses[0]?.email_address,
       },
     });
