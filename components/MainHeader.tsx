@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeSwitcher } from "@/provider/theme-provider";
 
@@ -14,7 +13,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
-  Link as Linked,
+  Link,
 } from "@nextui-org/react";
 import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 
@@ -38,7 +37,7 @@ const MainHeader = () => {
       dark:shadow-slate-800"
     >
       <div className="flex flex-row justify-start items-center mr-auto gap-x-2 lg:gap-x-10">
-        <Link href={"/main"}>
+        <Link href={isSignedIn ? "/main" : "/"}>
           <Image
             src="/logo-black.svg"
             alt="learn"
@@ -47,7 +46,7 @@ const MainHeader = () => {
             className="dark:hidden"
           />
         </Link>
-        <Link href={"/main"}>
+        <Link href={isSignedIn ? "/main" : "/"}>
           <Image
             src="/logo-white.svg"
             alt="learn"
@@ -171,7 +170,7 @@ const MainHeader = () => {
           <>
             <div className="hidden lg:flex">
               <SignInButton>
-                <Linked role="button">Login</Linked>
+                <Link role="button">Login</Link>
               </SignInButton>
             </div>
             <div className="hidden md:flex">

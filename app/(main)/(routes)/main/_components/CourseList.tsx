@@ -28,7 +28,6 @@ export const CourseList = ({
   return (
     <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
       {courses.map((item, index) => (
-        <Link href={`/course/${item.id}`}>
         <Card
           shadow="sm"
           key={index}
@@ -59,7 +58,7 @@ export const CourseList = ({
               </span>
             </div>
           </CardFooter>
-        </Card></Link>
+        </Card>
       ))}
     </div>
   );

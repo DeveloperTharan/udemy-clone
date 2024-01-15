@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
@@ -22,7 +23,6 @@ import {
   LayoutDashboard,
   ListChecks,
 } from "lucide-react";
-import Link from "next/link";
 
 export default async function CourseIdPage({
   params,
