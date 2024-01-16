@@ -54,7 +54,6 @@ export const CourseList = ({ coursesData }: CourseListProps) => {
               shadow="sm"
               key={index}
               isPressable
-              onPress={() => console.log("item pressed")}
               className="border dark:border-0"
             >
               <CardBody className="overflow-visible p-2 w-64">

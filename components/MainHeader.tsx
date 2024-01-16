@@ -19,6 +19,7 @@ import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 
 import { Search, LogOut, X } from "lucide-react";
 import { useUser } from "@/context/userContext";
+import { cn } from "@/lib/utils";
 
 const MainHeader = () => {
   const [Open, setOpen] = useState(false);
@@ -30,13 +31,14 @@ const MainHeader = () => {
 
   let isTeaherPage = pathname?.startsWith("/teacher");
   let isPlayerPage = pathname?.includes("/chapter");
+  let isCoursePage = pathname?.startsWith("/course");
 
   return (
     <nav
-      className="flex flex-row items-center w-full px-2 lg:px-10 py-5 h-auto max-h-16 shadow 
+      className="flex flex-row items-center w-full px-5 lg:px-10 py-5 h-auto max-h-16 shadow 
       dark:shadow-slate-800"
     >
-      <div className="flex flex-row justify-start items-center mr-auto gap-x-2 lg:gap-x-10">
+      <div className="flex flex-row justify-start items-center mr-auto">
         <Link href={isSignedIn ? "/main" : "/"}>
           <Image
             src="/logo-black.svg"
@@ -55,7 +57,11 @@ const MainHeader = () => {
             className="hidden dark:block"
           />
         </Link>
-        <div className={`${isTeaherPage || isPlayerPage ? "hidden" : ""}`}>
+        <div
+          className={cn(
+            isTeaherPage || isPlayerPage || isCoursePage ? "hidden" : ""
+          )}
+        >
           <Input
             type="text"
             placeholder="Search for any thing"
@@ -64,21 +70,25 @@ const MainHeader = () => {
               <Search className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
             }
             radius="full"
-            className="w-96 hidden lg:block"
+            className="w-96 hidden lg:block ml-2 lg:ml-10"
           />
         </div>
-        <div className={`${isTeaherPage || isPlayerPage ? "hidden" : ""}`}>
+        <div
+          className={cn(
+            isTeaherPage || isPlayerPage || isCoursePage ? "hidden" : ""
+          )}
+        >
           {Open === false ? (
             <button
               onClick={() => setOpen(true)}
-              className="lg:hidden hover:bg-default-300/80 p-1 rounded-md"
+              className="lg:hidden hover:bg-default-300/80 p-1 rounded-md ml-2 lg:ml-10"
             >
               <Search className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
             </button>
           ) : (
             <button
               onClick={() => setOpen(false)}
-              className="lg:hidden hover:bg-default-300/80 p-1 rounded-md"
+              className="lg:hidden hover:bg-default-300/80 p-1 rounded-md ml-2 lg:ml-10"
             >
               <X className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
             </button>
@@ -99,13 +109,15 @@ const MainHeader = () => {
       </div>
       <div className="flex flex-row justify-start items-center ml-auto gap-x-4">
         {user?.role == "TEACHER" ? (
-          <>
+          <div
+            className={cn(isCoursePage ? "hidden" : "flex flex-row gap-x-2")}
+          >
             {isTeaherPage || isPlayerPage ? (
               <Button
                 size="sm"
                 variant="ghost"
                 onClick={() => router.push("/main")}
-                className={`${pathname === "/" ? "hidden" : ""} `}
+                className={cn(pathname === "/" ? "hidden" : "")}
               >
                 <LogOut className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
                 Exit
@@ -115,12 +127,12 @@ const MainHeader = () => {
                 size="sm"
                 variant="ghost"
                 onClick={() => router.push("/teacher")}
-                className={`${pathname === "/" ? "hidden" : ""} `}
+                className={cn(pathname === "/" ? "hidden" : "")}
               >
                 Teacher Mode
               </Button>
             )}
-          </>
+          </div>
         ) : null}
         <ThemeSwitcher />
         {isSignedIn ? (
