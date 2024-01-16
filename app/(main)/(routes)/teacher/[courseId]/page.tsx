@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 
 import { Banner } from "@/components/Banner";
-import { IconBadge } from "@/components/IconBadge";
+import { IconBadge } from "@/components/ui/IconBadge";
 import { TitleForm } from "./_components/TitleForm";
 import { PriceForm } from "./_components/PriceForm";
 import { ImageForm } from "./_components/ImageForm";

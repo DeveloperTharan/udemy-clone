@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 import { Loader2 } from "lucide-react";
 
-import { ConfirmModel } from "@/components/ConfirmModal";
+import { ConfirmModel } from "@/components/model/ConfirmModel";
 
 import { Button } from "@nextui-org/react";
 

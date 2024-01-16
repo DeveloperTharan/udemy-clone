@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import { Button } from "@nextui-org/react";
 import axios from "axios";
-import { AccountDeleteModal } from "@/components/AccountDeleteModal";
+import { AccountDeleteModel } from "@/components/model/AccountDeleteModel";
 
 export const Danger = ({ initialData }: { initialData: User | null }) => {
   const router = useRouter();
@@ -31,7 +31,7 @@ export const Danger = ({ initialData }: { initialData: User | null }) => {
         <h4 className="text-xs md:text-sm text-gray-400">
           Delete your account and all its associated data
         </h4>
-        <AccountDeleteModal onConfirm={onClick} />
+        <AccountDeleteModel onConfirm={onClick} />
       </div>
     </div>
   );

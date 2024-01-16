@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 
-import { IconBadge } from "@/components/IconBadge";
+import { IconBadge } from "@/components/ui/IconBadge";
 
 import { ChapterTitleForm } from "./_components/ChapterTitleForm";
 import { ChapterVideoForm } from "./_components/ChapterVideoForm";

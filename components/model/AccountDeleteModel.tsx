@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-export const AccountDeleteModal = ({ onConfirm }: { onConfirm: () => void; }) => {
+export const AccountDeleteModel = ({ onConfirm }: { onConfirm: () => void; }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const handleDelete = () => {
