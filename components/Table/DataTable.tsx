@@ -66,7 +66,7 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
     }
 
     return filteredUsers;
-  }, [courseData, filterValue]);
+  }, [courseData, filterValue, hasSearchFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -169,6 +169,8 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
     onRowsPerPageChange,
     courseData.length,
     hasSearchFilter,
+    onClear,
+    router,
   ]);
 
   const bottomContent = useMemo(() => {
@@ -208,7 +210,14 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
         </div>
       </div>
     );
-  }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+  }, [
+    selectedKeys,
+    items.length,
+    page,
+    pages,
+    hasSearchFilter,
+    filteredItems.length,
+  ]);
 
   return (
     <Table

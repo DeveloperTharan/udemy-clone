@@ -41,7 +41,7 @@ export default async function Main() {
           <h4 className="text-2xl font-semibold">
             Recomended for you!{" "}
             <span className="text-blue-700 underline">
-              "learn and grow your skill's!!!"
+              &quot;learn and grow your skill&apos;s!!!&quot;
             </span>
           </h4>
           <CourseList
