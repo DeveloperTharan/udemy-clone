@@ -168,7 +168,6 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
     onSearchChange,
     onRowsPerPageChange,
     courseData.length,
-    hasSearchFilter,
     onClear,
     router,
   ]);
@@ -217,6 +216,8 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
     pages,
     hasSearchFilter,
     filteredItems.length,
+    onNextPage,
+    onPreviousPage
   ]);
 
   return (
