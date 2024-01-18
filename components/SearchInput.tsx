@@ -74,6 +74,7 @@ export const SearchInput = ({
         }
         radius="full"
         className="w-full lg:w-96 lg:ml-10"
+        autoComplete="off"
         onChange={handleSearch}
       />
       <div
@@ -93,7 +94,7 @@ export const SearchInput = ({
                 <Link
                   href={`/product/${item?.id}`}
                   className="flex items-center justify-start w-full cursor-pointer 
-                      hover:bg-gray-100/80 p-1 px-2 rounded-lg"
+                      hover:bg-gray-100/80 dark:hover:bg-gray-900/80 p-1 px-2 rounded-lg"
                 >
                   <img
                     className="h-10 w-10 rounded-md object-cover"
