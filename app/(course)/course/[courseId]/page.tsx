@@ -2,7 +2,8 @@ import { db } from "@/lib/db";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { Maincontent } from "./Maincontent";
+import { Maincontent } from "./_components/Maincontent";
+import { auth } from "@clerk/nextjs";
 
 export default async function CoursePage({
   params,
@@ -21,6 +22,12 @@ export default async function CoursePage({
     },
   });
 
+  const auther = await db.user.findUnique({
+    where: {
+      userId: CourseData?.userId,
+    },
+  });
+
   return (
     <div className="w-full h-full flex flex-col gapy-y-2 mt-5">
       <Link
@@ -30,9 +37,16 @@ export default async function CoursePage({
         <ArrowLeft className="h-4 w-4 mr-2" />
         Back to Home
       </Link>
-      <div className="bg-[#2D2F31] w-full h-80 relative px-10 lg:px-20 py-10">
+      <div className="bg-[#2D2F31] w-full h-auto min-h-80 relative px-10 lg:px-20 py-10">
         <Maincontent
-          
+          title={CourseData?.title}
+          description={CourseData?.description}
+          imageUrl={CourseData?.imageUrl}
+          price={CourseData?.price}
+          createdAt={CourseData?.createdAt}
+          updatedAt={CourseData?.updatedAt}
+          autherName={auther?.firstName + " " + auther?.lastName || ""}
+          category={CourseData?.category?.name}
         />
       </div>
     </div>

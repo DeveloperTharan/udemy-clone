@@ -23,7 +23,7 @@ import {
 
 import { LogOut } from "lucide-react";
 
-const MainHeader = () => {
+export const MainHeader = () => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -152,5 +152,3 @@ const MainHeader = () => {
     </nav>
   );
 };
-
-export default MainHeader;

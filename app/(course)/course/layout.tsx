@@ -1,6 +1,6 @@
 import React from "react";
 
-import MainHeader from "@/components/MainHeader";
+import { MainHeader } from "@/components/MainHeader";
 
 export default function CourseLayout({
   children,

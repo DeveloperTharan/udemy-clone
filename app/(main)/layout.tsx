@@ -1,5 +1,5 @@
 import Footer from "@/components/Footer";
-import MainHeader from "@/components/MainHeader";
+import { MainHeader } from "@/components/MainHeader";
 import { SearchInput } from "@/components/SearchInput";
 import { Metadata } from "next";
 import React from "react";

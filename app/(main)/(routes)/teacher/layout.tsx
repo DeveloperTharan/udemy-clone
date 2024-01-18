@@ -11,7 +11,7 @@ export default async function TeacherPage({
 }) {
   const { userId } = auth();
 
-  if (!userId) redirect("/main");
+  if (!userId) redirect("/");
 
   const user = await db.user.findUnique({
     where: { userId },
