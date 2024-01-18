@@ -5,6 +5,11 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeSwitcher } from "@/provider/theme-provider";
 
+import { cn } from "@/lib/utils";
+import { SearchInput } from "./SearchInput";
+import { useUser } from "@/context/userContext";
+import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
+
 import {
   Avatar,
   Button,
@@ -15,21 +20,18 @@ import {
   Input,
   Link,
 } from "@nextui-org/react";
-import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 
-import { Search, LogOut, X } from "lucide-react";
-import { useUser } from "@/context/userContext";
-import { cn } from "@/lib/utils";
+import { LogOut } from "lucide-react";
 
 const MainHeader = () => {
-  const [Open, setOpen] = useState(false);
-
   const pathname = usePathname();
   const router = useRouter();
+
   const { isSignedIn, signOut } = useAuth();
+
   const { user } = useUser();
 
-  let isTeaherPage = pathname?.startsWith("/teacher");
+  let isTeacherPage = pathname?.startsWith("/teacher");
   let isPlayerPage = pathname?.includes("/chapter");
   let isCoursePage = pathname?.startsWith("/course");
 
@@ -57,54 +59,8 @@ const MainHeader = () => {
             className="hidden dark:block"
           />
         </Link>
-        <div
-          className={cn(
-            isTeaherPage || isPlayerPage || isCoursePage ? "hidden" : ""
-          )}
-        >
-          <Input
-            type="text"
-            placeholder="Search for any thing"
-            labelPlacement="outside"
-            startContent={
-              <Search className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
-            }
-            radius="full"
-            className="w-96 hidden lg:block ml-2 lg:ml-10"
-          />
-        </div>
-        <div
-          className={cn(
-            isTeaherPage || isPlayerPage || isCoursePage ? "hidden" : ""
-          )}
-        >
-          {Open === false ? (
-            <button
-              onClick={() => setOpen(true)}
-              className="lg:hidden hover:bg-default-300/80 p-1 rounded-md ml-2 lg:ml-10"
-            >
-              <Search className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
-            </button>
-          ) : (
-            <button
-              onClick={() => setOpen(false)}
-              className="lg:hidden hover:bg-default-300/80 p-1 rounded-md ml-2 lg:ml-10"
-            >
-              <X className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
-            </button>
-          )}
-          {Open ? (
-            <Input
-              type="text"
-              placeholder="Search for any thing"
-              labelPlacement="outside"
-              startContent={
-                <Search className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
-              }
-              radius="full"
-              className="w-96 absolute top-14 left-1/2 -translate-x-1/2 z-50"
-            />
-          ) : null}
+        <div className="hidden lg:block">
+          <SearchInput isTeacherPage={isTeacherPage} isPlayerPage={isPlayerPage} isCoursePage={isCoursePage} />
         </div>
       </div>
       <div className="flex flex-row justify-start items-center ml-auto gap-x-4">
@@ -112,7 +68,7 @@ const MainHeader = () => {
           <div
             className={cn(isCoursePage ? "hidden" : "flex flex-row gap-x-2")}
           >
-            {isTeaherPage || isPlayerPage ? (
+            {isTeacherPage || isPlayerPage ? (
               <Button
                 size="sm"
                 variant="ghost"

@@ -14,7 +14,7 @@ export const Carousel = () => {
         <div className="absolute top-[20%] left-20 w-96 h-fit p-7 shadow-large text-black hidden lg:block">
           <h2 className="text-3xl font-extrabold">Go on, make a wish</h2>
           <p className="text-sm font-normal">
-            Did you know you can wishlist the courses you’re interested in? Just
+            Did you know you can wishlist the courses you&apos;re interested in? Just
             click the heart button.
           </p>
         </div>

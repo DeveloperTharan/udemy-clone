@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import MainHeader from "@/components/MainHeader";
+import { SearchInput } from "@/components/SearchInput";
 import { Metadata } from "next";
 import React from "react";
 
@@ -16,6 +17,9 @@ export default function MainLayout({
   return (
     <div className="w-full h-full min-h-full">
       <MainHeader />
+      <div className="lg:hidden w-full my-4 px-10 md:px-20">
+        <SearchInput />
+      </div>
       {children}
       <Footer />
     </div>
