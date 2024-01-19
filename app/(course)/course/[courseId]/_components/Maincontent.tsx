@@ -73,7 +73,7 @@ export const Maincontent = ({
         <Image
           src={imageUrl!}
           alt="product"
-          className="w-[100vh] lg:w-96 h-96 lg:h-52 object-cover object-right-top"
+          className="w-[100vh] lg:w-96 h-96 lg:h-52 object-cover"
         />
         <Button
           size="md"
