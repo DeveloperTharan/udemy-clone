@@ -12,7 +12,6 @@ import { Chapter, MuxData } from "@prisma/client";
 import { Button } from "@nextui-org/react";
 import { Pencil, PlusCircle, Video } from "lucide-react";
 import { FileUpload } from "@/components/FileUploder";
-import dynamic from "next/dynamic";
 
 interface ChapterVideoFormProps {
   initialData: Chapter & { muxData?: MuxData | null };

@@ -37,7 +37,7 @@ export const Maincontent = ({
   };
   return (
     <div className="flex flex-col-reverse lg:flex-row gap-y-10 justify-center lg:justify-between items-start w-full">
-      <div className="flex flex-col justify-center items-start space-y-4 w-[100vh] lg:w-[65%] mx-auto">
+      <div className="flex flex-col justify-center items-start space-y-4 w-full lg:w-[65%] mx-auto">
         <div className="text-[18px] text-purple-600 font-semibold">
           {category}
         </div>
@@ -45,28 +45,28 @@ export const Maincontent = ({
         <p className="text-sm font-normal italic text-gray-400">
           {description}
         </p>
-        <div className="text-sm">
+        <div className="text-sm text-white">
           Created by{" "}
           <span className="text-purple-600 underline">{autherName}</span>
         </div>
         <div className="flex flex-row gap-x-2 items-center">
-          <AlertOctagon className="h-4 w-4" />
-          <span className="text-xs">
+          <AlertOctagon className="h-4 w-4 text-white" />
+          <span className="text-xs text-white">
             Created At - {formatDate(createdAt as unknown as number)}
           </span>
         </div>
         <div className="flex flex-row gap-x-2 items-center">
-          <AlertOctagon className="h-4 w-4" />
-          <span className="text-xs">
+          <AlertOctagon className="h-4 w-4 text-white" />
+          <span className="text-xs text-white">
             Udated At - {formatDate(updatedAt as unknown as number)}
           </span>
         </div>
         <Button
           size="md"
           variant="solid"
-          className="w-[100vh] text-white bg-purple-700 lg:hidden"
+          className="w-full text-white bg-purple-700 lg:hidden"
         >
-          Buy this course
+          Buy this course at ${price}
         </Button>
       </div>
       <div className="flex flex-col justify-center items-center space-y-4 w-full lg:w-[35%]">
@@ -80,7 +80,7 @@ export const Maincontent = ({
           variant="solid"
           className="lg:w-96 text-white bg-purple-700 hidden lg:block"
         >
-          Buy this course
+          Buy this course at ${price}
         </Button>
       </div>
     </div>

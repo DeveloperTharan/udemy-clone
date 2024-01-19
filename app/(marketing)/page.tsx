@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 import Footer from "@/components/Footer";
 import TabView from "@/components/TabView";
-import MainHeader from "@/components/MainHeader";
+import { MainHeader } from "@/components/MainHeader";
 
 export default function Marketing() {
   const { isSignedIn } = useAuth();
