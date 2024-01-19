@@ -90,6 +90,7 @@ export default async function CoursePage({
               </p>
             </div>
             <ChaptersList
+              courseId={course.id}
               chapter={course.chapters.map((data) => ({
                 id: data.id,
                 title: data.title,
