@@ -57,8 +57,6 @@ export const SearchInput = ({
     }
   }, 1000);
 
-  console.log(searchResults);
-
   return (
     <div
       className={cn(

@@ -8,6 +8,14 @@ export const Attachments = ({
 }: {
   attachments: { id: string; title: string; url: string }[];
 }) => {
+  const titlehandler = (title: string, length: number) => {
+    if (title.length > length) {
+      return title.slice(0, length) + "...";
+    } else {
+      return title;
+    }
+  } 
+
   return (
     <div className="w-full h-auto">
       {attachments.map((data) => (
@@ -16,9 +24,9 @@ export const Attachments = ({
           target="_blank"
           key={data.id}
           className="p-4 text-sm text-blue-500 bg-blue-500/20 dark:bg-gray-900/80
-          rounded-md w-full truncate underline"
+          rounded-md underline"
         >
-          {data.title}
+          {titlehandler(`${data.title}`, 35)}
         </Link>
       ))}
     </div>

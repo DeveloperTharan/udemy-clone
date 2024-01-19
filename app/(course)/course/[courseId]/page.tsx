@@ -56,8 +56,12 @@ export default async function CoursePage({
     },
   });
 
+  if (purchase) {
+    return redirect(`/course/${course.id}/${course.chapters[0].id}`);
+  }
+
   return (
-    <div className="w-full h-full flex flex-col gapy-y-2 mt-5">
+    <div className="w-full h-auto min-h-screen flex flex-col gapy-y-2 mt-5">
       <Link
         href={`/main`}
         className="flex items-center text-sm hover:opacity-75 transition mb-6 ml-10"
@@ -67,6 +71,7 @@ export default async function CoursePage({
       </Link>
       <div className="bg-[#2D2F31] w-full h-auto min-h-80 relative px-10 lg:px-20 py-10">
         <Maincontent
+          id={course?.id}
           title={course?.title}
           description={course?.description}
           imageUrl={course?.imageUrl}
@@ -75,10 +80,12 @@ export default async function CoursePage({
           updatedAt={course?.updatedAt}
           autherName={auther?.firstName + " " + auther?.lastName || ""}
           category={course?.category?.name}
+          purchases={purchase}
+          chapterId={course?.chapters[0].id}
         />
       </div>
       <div className="flex flex-col lg:flex-row w-full h-auto px-10 lg:px-20 py-10 gap-10">
-        <div className="w-full lg:w-[70%]">
+        <div className="w-full lg:w-[70%] mx-auto">
           <div className="w-full flex-flex-col justify-start items-center">
             <h1 className="text-2xl font-extrabold mb-6">Course Content</h1>
             <div className="flex flec-row gap-x-6 justify-start items-center mb-2">
@@ -99,16 +106,18 @@ export default async function CoursePage({
             />
           </div>
         </div>
-        <div className="w-full lg:w-[30%]">
+        <div className="w-full lg:w-[30%] mx-auto">
           <div className="w-full flex-flex-col justify-start items-center">
             <h1 className="text-2xl font-extrabold mb-6">
               This course includes:(Attachments)
             </h1>
-            <Attachments attachments={course.attachments.map((data) => ({
-              id: data.id,
-              title: data.name,
-              url: data.url,
-            }))} />
+            <Attachments
+              attachments={course.attachments.map((data) => ({
+                id: data.id,
+                title: data.name,
+                url: data.url,
+              }))}
+            />
           </div>
         </div>
       </div>

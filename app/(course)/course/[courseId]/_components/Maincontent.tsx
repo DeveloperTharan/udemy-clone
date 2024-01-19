@@ -4,8 +4,10 @@ import React from "react";
 import { Button, Image } from "@nextui-org/react";
 
 import { AlertOctagon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface MaincontentProps {
+  id: string;
   title: string | undefined | null;
   description: string | undefined | null;
   imageUrl: string | undefined | null;
@@ -14,9 +16,12 @@ interface MaincontentProps {
   updatedAt: Date | undefined | null;
   autherName: string | undefined | null;
   category: string | undefined | null;
+  purchases: boolean | null;
+  chapterId: string | undefined | null;
 }
 
 export const Maincontent = ({
+  id,
   title,
   description,
   imageUrl,
@@ -25,7 +30,20 @@ export const Maincontent = ({
   updatedAt,
   category,
   autherName,
+  purchases,
+  chapterId,
 }: MaincontentProps) => {
+  const router = useRouter();
+
+  const handleRediret = () => {
+    if(purchases === null) {
+      return router.push(`stripe`);
+    }
+    else{
+      return router.push(`course/${id}/${chapterId}`);
+    }
+  }
+
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp);
     const formattedDate = date.toLocaleString("en-US", {
@@ -35,6 +53,7 @@ export const Maincontent = ({
     });
     return formattedDate;
   };
+
   return (
     <div className="flex flex-col-reverse lg:flex-row gap-y-10 justify-center lg:justify-between items-start w-full">
       <div className="flex flex-col justify-center items-start space-y-4 w-full lg:w-[65%] mx-auto">
@@ -65,8 +84,9 @@ export const Maincontent = ({
           size="md"
           variant="solid"
           className="w-full text-white bg-purple-700 lg:hidden"
+          onClick={handleRediret}
         >
-          Buy this course at ${price}
+          {purchases === null ? `Buy this course at ${price}` : 'Whatch Now'}
         </Button>
       </div>
       <div className="flex flex-col justify-center items-center space-y-4 w-full lg:w-[35%]">
@@ -79,8 +99,9 @@ export const Maincontent = ({
           size="md"
           variant="solid"
           className="lg:w-96 text-white bg-purple-700 hidden lg:block"
+          onClick={handleRediret}
         >
-          Buy this course at ${price}
+          {purchases === null ? `Buy this course at ${price}` : 'Whatch Now'}
         </Button>
       </div>
     </div>
