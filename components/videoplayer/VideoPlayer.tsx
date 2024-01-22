@@ -13,6 +13,7 @@ import {
   Slider,
   Spinner,
 } from "@nextui-org/react";
+import { cn } from "@/lib/utils";
 
 export const VideoPlayer = ({ videoUrl }: { videoUrl: string | null }) => {
   const [volume, setVolume] = useState(1);
@@ -146,6 +147,17 @@ export const VideoPlayer = ({ videoUrl }: { videoUrl: string | null }) => {
           className="relative w-full h-fit group cursor-pointer"
           onKeyDown={handleKeyDown}
         >
+          {!isPlaying ? (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <div className="px-5 py-2 bg-white/30 border border-white rounded-md">
+                <FaPlay className="h-5 w-5 text-white" />
+              </div>
+            </div>
+          ) : (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <FaPause className="h-7 w-7 text-white opacity-0 group-hover:opacity-100 transition delay-300 duration-300 ease-linear" />
+            </div>
+          )}
           <video
             onTimeUpdate={handleVideoProgress}
             ref={videoRef}
@@ -157,15 +169,17 @@ export const VideoPlayer = ({ videoUrl }: { videoUrl: string | null }) => {
             <source src={videoUrl!} />
           </video>
           <div
-            className="bg-black/10 opacity-0 group-hover:opacity-100 absolute left-0 bottom-0 w-full h-fit p-2
-        transition-all delay-300 duration-300 ease-linear group/controls"
+            className={cn(
+              "bg-black/10 absolute left-0 bottom-0 w-full h-fit p-2 transition-all delay-300 duration-300 ease-linear group/controls",
+              !isPlaying ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+            )}
           >
             <div className="flex flex-col gap-2 justify-center items-start w-full">
               <div className="flex flex-row justify-between items-center w-full">
                 <div className="flex flex-row gap-x-5">
                   <button
                     onClick={togglePlay}
-                    className="outline-none focus:outline-none"
+                    className="outline-none focus:outline-none hover:bg-gray-600/80 px-2 py-1.5 rounded-full text-center"
                   >
                     {isPlaying ? (
                       <FaPause className="h-[14px] w-[14px]" />
@@ -180,7 +194,7 @@ export const VideoPlayer = ({ videoUrl }: { videoUrl: string | null }) => {
                     <div className="flex flex-row gap-x-2 items-center">
                       <button
                         onClick={toggleMute}
-                        className="outline-none focus:outline-none"
+                        className="outline-none focus:outline-none hover:bg-gray-600/80 px-2 py-1.5 rounded-full"
                       >
                         {isMuted ? (
                           <FaVolumeMute className="h-[14px] w-[14px]" />
@@ -195,14 +209,18 @@ export const VideoPlayer = ({ videoUrl }: { videoUrl: string | null }) => {
                           handleSliderChange(value as number)
                         }
                         className="w-20 rounded-md hidden group-hover/controls:block transition 
-                    delay-500 ease-linear"
+                        delay-500 ease-linear"
                       />
                     </div>
                   </div>
-                  <div role="button" onClick={handleFullScreen}>
+                  <div
+                    role="button"
+                    onClick={handleFullScreen}
+                    className="hover:bg-gray-600/80 px-2 py-1.5 rounded-full"
+                  >
                     <MdOutlineFullscreen className="h-4 w-4" />
                   </div>
-                  <div>
+                  <div className="text-xs hover:bg-gray-600/80 px-2 py-1.5 rounded-full">
                     <Dropdown>
                       <DropdownTrigger>{`${playbackSpeed}x`}</DropdownTrigger>
                       <DropdownMenu aria-label="Playback Speed">
