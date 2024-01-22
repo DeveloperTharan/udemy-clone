@@ -20,6 +20,7 @@ export async function GET(
           contains: params.name,
           mode: "default",
         },
+        isPublished: true,
       },
       include: {
         category: true,
