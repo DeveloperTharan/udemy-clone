@@ -23,7 +23,7 @@ export const ChaptersList = ({ chapter, courseId }: ChaptersListProps) => {
             className="flex flex-row items-center justify-start gap-x-2 text-sm 
             bg-gray-100/80 dark:bg-gray-800/80 p-2 rounded-md mb-5 w-full"
             disabled={data.isLocked}
-            onClick={() => router.push(`/course/${courseId}/${data.id}`)}
+            onClick={() => router.push(`/course/${courseId}/chapter/${data.id}`)}
           >
             {data.isLocked ? (
               <Lock className="h-4 w-4" />

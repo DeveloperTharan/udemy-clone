@@ -1,13 +1,9 @@
 /**
- * Publishes a course if it meets the required validation checks.
- *
- * Checks that the course has a title, description, image, category,
- * and at least one published chapter. Updates the course record to
- * set isPublished to true if validation passes.
- *
- * Returns JSON response with published course on success, or error
- * response on validation failure or error.
+ * Publishes a course by ID by setting isPublished to true.
+ * Authenticates the user, checks validity of course data,
+ * and returns JSON response with published course.
  */
+
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -30,11 +26,7 @@ export async function PATCH(
         userId,
       },
       include: {
-        chapters: {
-          include: {
-            muxData: true,
-          },
-        },
+        chapters: true,
       },
     });
 

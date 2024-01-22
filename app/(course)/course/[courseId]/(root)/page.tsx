@@ -3,9 +3,9 @@ import Link from "next/link";
 
 import { db } from "@/lib/db";
 
-import { Attachments } from "./_components/Attachments";
-import { Maincontent } from "./_components/Maincontent";
-import { ChaptersList } from "./_components/ChaptersList";
+import { Attachments } from "../_components/Attachments";
+import { Maincontent } from "../_components/Maincontent";
+import { ChaptersList } from "../_components/ChaptersList";
 
 import { ArrowLeft } from "lucide-react";
 import { auth } from "@clerk/nextjs";

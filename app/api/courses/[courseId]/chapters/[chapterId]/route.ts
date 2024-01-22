@@ -1,24 +1,20 @@
 /**
- * Update and delete chapter API routes for a course.
+ * Update chapter route handler.
  *
- * The PATCH route updates a chapter for a course. It checks auth, validates ownership of the course,
- * updates the chapter data in the database, handles video URL updates with Mux, and returns the updated chapter.
+ * Authenticates the user, validates they own the course,
+ * updates the chapter data, and returns the updated chapter.
  *
- * The DELETE route deletes a chapter for a course. It checks auth, validates ownership of the course,
- * deletes any Mux video data, deletes the chapter from the database, and updates the course publish status if needed.
+ * Delete chapter route handler.
  *
- * These are exported API routes protected behind authentication.
+ * Authenticates the user, validates they own the course,
+ * deletes the chapter, updates the course publish status if needed,
+ * and returns the deleted chapter.
  */
-import Mux from "@mux/mux-node";
+
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-
-const { Video } = new Mux(
-  process.env.MUX_TOKEN_ID!,
-  process.env.MUX_TOKEN_SECRET!
-);
 
 //update chapter
 export async function PATCH(
@@ -53,37 +49,6 @@ export async function PATCH(
         ...values,
       },
     });
-
-    if (values.videoUrl) {
-      const existingMuxData = await db.muxData.findFirst({
-        where: {
-          chapterId: params.chapterId,
-        },
-      });
-
-      if (existingMuxData) {
-        await Video.Assets.del(existingMuxData.assetId);
-        await db.muxData.delete({
-          where: {
-            id: existingMuxData.id,
-          },
-        });
-      }
-
-      const asset = await Video.Assets.create({
-        input: values.videoUrl,
-        playback_policy: "public",
-        test: false,
-      });
-
-      await db.muxData.create({
-        data: {
-          chapterId: params.chapterId,
-          assetId: asset.id,
-          playbackId: asset.playback_ids?.[0]?.id,
-        },
-      });
-    }
 
     return NextResponse.json(chapter);
   } catch (error) {
@@ -124,23 +89,6 @@ export async function DELETE(
 
     if (!chapter) {
       return new NextResponse("Not Found", { status: 404 });
-    }
-
-    if (chapter.videoUrl) {
-      const existingMuxData = await db.muxData.findFirst({
-        where: {
-          chapterId: params.chapterId,
-        },
-      });
-
-      if (existingMuxData) {
-        await Video.Assets.del(existingMuxData.assetId);
-        await db.muxData.delete({
-          where: {
-            id: existingMuxData.id,
-          },
-        });
-      }
     }
 
     const deletedChapter = await db.chapter.delete({

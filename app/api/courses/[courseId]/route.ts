@@ -1,21 +1,21 @@
 /**
- * API route handlers for PATCH and DELETE operations on a specific course.
- *
- * The PATCH handler updates a course by ID, checking auth and validating input.
- *
- * The DELETE handler deletes a course by ID, checking auth, validating existence,
- * deleting associated video assets, and returning the deleted course data.
+ * Handles PATCH requests to update a course by ID.
+ * Authenticates the user, validates course ownership, updates the course data,
+ * and returns the updated course.
+ * Handles any errors and returns proper response.
  */
-import Mux from "@mux/mux-node";
+
+/**
+ * Handles DELETE requests to delete a course by ID.
+ * Authenticates the user, validates course ownership, deletes the course,
+ * and returns the deleted course.
+ * Handles any errors and returns proper response.
+ */
+
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-
-const { Video } = new Mux(
-  process.env.MUX_TOKEN_ID!,
-  process.env.MUX_TOKEN_SECRET!
-);
 
 export async function PATCH(
   req: Request,
@@ -64,22 +64,12 @@ export async function DELETE(
         userId: userId,
       },
       include: {
-        chapters: {
-          include: {
-            muxData: true,
-          },
-        },
+        chapters: true,
       },
     });
 
     if (!course) {
       return new NextResponse("Not found", { status: 404 });
-    }
-
-    for (const chapter of course.chapters) {
-      if (chapter.muxData?.assetId) {
-        await Video.Assets.del(chapter.muxData.assetId);
-      }
     }
 
     const deletedCourse = await db.course.delete({

@@ -6,15 +6,15 @@ import { useRouter } from "next/navigation";
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import MuxPlayer from "@mux/mux-player-react";
 
-import { Chapter, MuxData } from "@prisma/client";
+import { Chapter } from "@prisma/client";
 import { Button } from "@nextui-org/react";
 import { Pencil, PlusCircle, Video } from "lucide-react";
 import { FileUpload } from "@/components/FileUploder";
+import { VideoPlayer } from "@/components/videoplayer/VideoPlayer";
 
 interface ChapterVideoFormProps {
-  initialData: Chapter & { muxData?: MuxData | null };
+  initialData: Chapter;
   courseId: string;
   chapterId: string;
 }
@@ -79,10 +79,8 @@ export const ChapterVideoForm = ({
             <Video className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="relative aspect-video mt-2">
-            <MuxPlayer
-              playbackId={initialData?.muxData?.playbackId || ""}
-            />
+          <div className="relative aspect-video my-2">
+            <VideoPlayer videoUrl={initialData.videoUrl} />
           </div>
         ))}
       {isEditing && (
