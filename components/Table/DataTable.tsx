@@ -30,6 +30,9 @@ import {
   SortDescriptor,
   Tooltip,
 } from "@nextui-org/react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { ConfirmModel } from "../model/ConfirmModel";
 
 interface DataTableProps {
   courseData: Course[];
@@ -45,10 +48,26 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
     column: "title",
     direction: "ascending",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
   const hasSearchFilter = Boolean(filterValue);
+
+  const onDelete = async (courseId: string) => {
+    try {
+      setIsLoading(true);
+
+      await axios.delete(`/api/courses/${courseId}`);
+
+      toast.success("Course deleted");
+      router.refresh();
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const categoryFilter = (categoryId: string) => {
     const res = categoryData.find((category) => category.key === categoryId);
@@ -217,7 +236,7 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
     hasSearchFilter,
     filteredItems.length,
     onNextPage,
-    onPreviousPage
+    onPreviousPage,
   ]);
 
   return (
@@ -248,7 +267,7 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
         {(item) => (
           <TableRow key={item.id}>
             <TableCell>{item.title}</TableCell>
-            <TableCell>{`$${item.price || ""}`}</TableCell>
+            <TableCell>{`${item.price || ""}`}</TableCell>
             <TableCell>{categoryFilter(item.categoryId!)}</TableCell>
             <TableCell>
               <Chip
@@ -277,9 +296,10 @@ export const DataTable = ({ courseData, categoryData }: DataTableProps) => {
                   </div>
                 </Tooltip>
                 <Tooltip color="danger" content="Delete course">
-                  <div className="w-full h-full text-danger cursor-pointer active:opacity-50">
-                    <Trash size={18} />
-                  </div>
+                  <ConfirmModel
+                    onConfirm={() => onDelete(item.id)}
+                    isLoading={isLoading}
+                  />
                 </Tooltip>
               </div>
             </TableCell>
