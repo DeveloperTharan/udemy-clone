@@ -1,7 +1,8 @@
 "use client";
 
-import axios from "axios";
 import { useState } from "react";
+
+import axios from "axios";
 import toast from "react-hot-toast";
 
 import { Button } from "@nextui-org/react";
@@ -15,7 +16,7 @@ export const CourseEnrollButton = ({
   price,
   courseId,
 }: CourseEnrollButtonProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+ /*  const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
     try {
@@ -29,12 +30,12 @@ export const CourseEnrollButton = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }; */
 
   return (
     <Button
-      onClick={onClick}
-      disabled={isLoading}
+      /* onClick={onClick}
+      disabled={isLoading} */
       size="md"
       variant="solid"
       className="w-full text-white bg-purple-600"

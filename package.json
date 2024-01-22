@@ -36,6 +36,7 @@
     "react-icons": "^5.0.1",
     "react-quill": "^2.0.0",
     "react-responsive-carousel": "^3.2.23",
+    "stripe": "^14.13.0",
     "svix": "^1.15.0",
     "tailwind-merge": "^2.2.0",
     "uploadthing": "^5.5.3",

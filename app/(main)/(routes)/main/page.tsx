@@ -8,7 +8,6 @@ import { Category2 } from "./_components/Category2";
 import { CourseList } from "./_components/CourseList";
 
 export default async function Main() {
-
   const course = await db.course.findMany({
     where: {
       isPublished: true,
