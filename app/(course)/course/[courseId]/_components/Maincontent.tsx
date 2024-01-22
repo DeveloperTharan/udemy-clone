@@ -1,10 +1,13 @@
 "use client";
 
 import React from "react";
+import { redirect } from "next/navigation";
+
+import { CourseEnrollButton } from "./CourseEnrollButton";
+
 import { Button, Image } from "@nextui-org/react";
 
 import { AlertOctagon } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 interface MaincontentProps {
   id: string;
@@ -33,17 +36,6 @@ export const Maincontent = ({
   purchases,
   chapterId,
 }: MaincontentProps) => {
-  const router = useRouter();
-
-  const handleRediret = () => {
-    if(purchases === null) {
-      return router.push(`stripe`);
-    }
-    else{
-      return router.push(`course/${id}/${chapterId}`);
-    }
-  }
-
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp);
     const formattedDate = date.toLocaleString("en-US", {
@@ -80,14 +72,19 @@ export const Maincontent = ({
             Udated At - {formatDate(updatedAt as unknown as number)}
           </span>
         </div>
-        <Button
-          size="md"
-          variant="solid"
-          className="w-full text-white bg-purple-700 lg:hidden"
-          onClick={handleRediret}
-        >
-          {purchases === null ? `Buy this course at ${price}` : 'Whatch Now'}
-        </Button>
+        <div className="lg:hidden w-full">
+          {!purchases && <CourseEnrollButton courseId={id} price={price!} />}
+          {purchases && (
+            <Button
+              size="md"
+              variant="solid"
+              className="w-full text-white bg-purple-700 lg:hidden"
+              onClick={() => redirect(`/course/${id}/chapter/${chapterId}`)}
+            >
+              Whatch Now
+            </Button>
+          )}
+        </div>
       </div>
       <div className="flex flex-col justify-center items-center space-y-4 w-full lg:w-[35%]">
         <Image
@@ -95,14 +92,19 @@ export const Maincontent = ({
           alt="product"
           className="w-[100vh] lg:w-96 h-96 lg:h-52 object-cover"
         />
-        <Button
-          size="md"
-          variant="solid"
-          className="lg:w-96 text-white bg-purple-700 hidden lg:block"
-          onClick={handleRediret}
-        >
-          {purchases === null ? `Buy this course at ${price}` : 'Whatch Now'}
-        </Button>
+        <div className="hidden lg:block w-96">
+          {!purchases && <CourseEnrollButton courseId={id} price={price!} />}
+          {purchases && (
+            <Button
+              size="md"
+              variant="solid"
+              className="w-full text-white bg-purple-700 lg:hidden"
+              onClick={() => redirect(`/course/${id}/chapter/${chapterId}`)}
+            >
+              Whatch Now
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

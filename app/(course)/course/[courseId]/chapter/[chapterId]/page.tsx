@@ -2,10 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 
+import { Preview } from "@/components/Preview";
+import { getChapters } from "@/actions/get-chapters";
 import { VideoPlayer } from "@/components/videoplayer/VideoPlayer";
+import { CourseEnrollButton } from "../../_components/CourseEnrollButton";
 
 import { ArrowLeft } from "lucide-react";
 
@@ -18,15 +20,16 @@ export default async function ChapterIdPage({
 
   if (!userId) return redirect("/");
 
-  const chapter = await db.chapter.findUnique({
-    where: {
-      id: params.chapterId,
-      courseId: params.courseId,
-    },
+  const { courseId, chapterId } = params;
+
+  const { chapter, course, nextChapter, purchase } = await getChapters({
+    userId,
+    chapterId,
+    courseId,
   });
 
-  if (!chapter) {
-    return redirect(`/chapter/${params.courseId}`);
+  if (!chapter || !course) {
+    return redirect("/main");
   }
 
   return (
@@ -40,10 +43,19 @@ export default async function ChapterIdPage({
       </Link>
       <div className="flex flex-col lg:flex-row gap-10 justify-start items-center w-full h-auto">
         <div className="w-full lg:w-[60%] h-auto">
-          <h1 className="text-2xl font-bold my-5">{chapter.title}</h1>
-          <VideoPlayer videoUrl={chapter.videoUrl} />
+          <h1 className="text-2xl font-bold my-5">{chapter?.title}</h1>
+          <VideoPlayer videoUrl={chapter?.videoUrl} />
         </div>
-        <div className="w-full lg:w-[40%] h-auto">other</div>
+        <div className="flex flex-col gap-5 w-full lg:w-[40%] h-auto">
+          <h1 className="text-2xl font-bold">{chapter?.title}</h1>
+          <Preview value={chapter?.description!} />
+          {!purchase && (
+            <CourseEnrollButton
+              courseId={params.courseId}
+              price={course.price!}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

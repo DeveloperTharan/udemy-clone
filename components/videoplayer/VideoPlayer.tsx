@@ -16,12 +16,12 @@ import {
 import { cn } from "@/lib/utils";
 
 export const VideoPlayer = ({ videoUrl }: { videoUrl: string | null }) => {
-  const [volume, setVolume] = useState(1);
-  const [progress, setProgress] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
-  const [videoRunTime, setVideoRunTime] = useState("00:00");
+  const [volume, setVolume] = useState<number>(1);
+  const [progress, setProgress] = useState<number>(0);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
+  const [videoRunTime, setVideoRunTime] = useState<string>("00:00");
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -35,6 +35,12 @@ export const VideoPlayer = ({ videoUrl }: { videoUrl: string | null }) => {
       videoRef.current.muted = isMuted;
       videoRef.current.playbackRate = playbackSpeed;
     }
+
+    return () => {
+      videoRef.current?.removeEventListener("ended", () => {
+        setIsPlaying(false);
+      });
+    };
   }, [volume, isMuted, playbackSpeed]);
 
   const togglePlay = () => {
@@ -135,13 +141,11 @@ export const VideoPlayer = ({ videoUrl }: { videoUrl: string | null }) => {
 
   return (
     <>
-      {videoUrl === null ? (
-        <p>
-          <Spinner
-            size="lg"
-            className="w-full h-fit flex justify-center items-center"
-          />
-        </p>
+      {videoUrl === null || undefined ? (
+        <Spinner
+          size="lg"
+          className="w-full h-fit flex justify-center items-center"
+        />
       ) : (
         <div
           className="relative w-full h-fit group cursor-pointer"
