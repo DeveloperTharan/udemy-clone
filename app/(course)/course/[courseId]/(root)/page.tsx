@@ -35,7 +35,6 @@ export default async function CoursePage({
         },
       },
       attachments: true,
-      purchases: true,
     },
   });
 
@@ -55,10 +54,6 @@ export default async function CoursePage({
       },
     },
   });
-
-  if (purchase) {
-    return redirect(`/course/${course.id}/${course.chapters[0].id}`);
-  }
 
   return (
     <div className="w-full h-auto min-h-screen flex flex-col gapy-y-2 mt-5">

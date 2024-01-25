@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { BookOpen, ChevronRight, ChevronLeft } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface CourseListProps {
   coursesData: {
@@ -14,11 +15,17 @@ interface CourseListProps {
     category: string | undefined;
     chapters: number;
     price: number | null;
-    purchased: string[] | null;
+  }[];
+  purchased: {
+    id: string;
+    userId: string;
+    courseId: string;
+    createdAt: Date;
+    updatedAt: Date;
   }[];
 }
 
-export const CourseList = ({ coursesData }: CourseListProps) => {
+export const CourseList = ({ coursesData, purchased }: CourseListProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const scrollRight = () => {
@@ -44,7 +51,7 @@ export const CourseList = ({ coursesData }: CourseListProps) => {
         <ChevronLeft className="h-6 w-6 text-white" />
       </div>
       <div
-        className="flex flex-row relative w-full h-fit flex-nowrap whitespace-nowrap 
+        className="flex flex-row relative w-full h-fit flex-nowrap whitespace-nowrap
         overflow-x-auto scrollbar-hide gap-x-2 transition-all scroll-smooth"
         ref={sliderRef}
       >
@@ -75,23 +82,10 @@ export const CourseList = ({ coursesData }: CourseListProps) => {
                       {item.chapters} chapters
                     </span>
                   </div>
-                  <div className="flex flex-row items-center">
-                    {item.price !== null && (
-                      <span className="text-default-500 italic mr-2">
-                        Price
-                      </span>
-                    )}
-                    {item.price !== null ? (
-                      <>
-                        {item.purchased !== null ? (
-                          <span>${item.price}</span>
-                        ) : (
-                          "Paid"
-                        )}
-                      </>
-                    ) : (
-                      "FREE"
-                    )}
+                  <div>
+                    {purchased.some((data) => data.courseId === item.id)
+                      ? <span className="text-gray-500">Paid</span>
+                      : `Price $ ${item.price}`}
                   </div>
                 </div>
               </CardFooter>

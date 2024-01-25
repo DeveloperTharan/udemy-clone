@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { CourseEnrollButton } from "./CourseEnrollButton";
 
@@ -19,7 +19,13 @@ interface MaincontentProps {
   updatedAt: Date | undefined | null;
   autherName: string | undefined | null;
   category: string | undefined | null;
-  purchases: boolean | null;
+  purchases: {
+    id: string;
+    userId: string;
+    courseId: string;
+    createdAt: Date;
+    updatedAt: Date;
+  } | null;
   chapterId: string | undefined | null;
 }
 
@@ -45,6 +51,8 @@ export const Maincontent = ({
     });
     return formattedDate;
   };
+
+  const router = useRouter();
 
   return (
     <div className="flex flex-col-reverse lg:flex-row gap-y-10 justify-center lg:justify-between items-start w-full">
@@ -79,7 +87,7 @@ export const Maincontent = ({
               size="md"
               variant="solid"
               className="w-full text-white bg-purple-700 lg:hidden"
-              onClick={() => redirect(`/course/${id}/chapter/${chapterId}`)}
+              onClick={() => router.push(`/course/${id}/chapter/${chapterId}`)}
             >
               Whatch Now
             </Button>
@@ -98,8 +106,8 @@ export const Maincontent = ({
             <Button
               size="md"
               variant="solid"
-              className="w-full text-white bg-purple-700 lg:hidden"
-              onClick={() => redirect(`/course/${id}/chapter/${chapterId}`)}
+              className="w-full text-white bg-purple-700"
+              onClick={() => router.push(`/course/${id}/chapter/${chapterId}`)}
             >
               Whatch Now
             </Button>

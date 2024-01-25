@@ -1,10 +1,3 @@
-/**
- * Handles Stripe webhook events related to checkout sessions. 
- * Verifies the webhook signature and processes completed checkout sessions.
- * Creates a purchase record in the database when a checkout session completes.
- * Returns 400 if metadata is missing or webhook signature fails to verify.
- * Returns 200 for unhandled events or on success.
-*/
 import Stripe from "stripe";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
