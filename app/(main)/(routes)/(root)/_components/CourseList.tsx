@@ -56,11 +56,13 @@ export const CourseList = ({ coursesData, purchased }: CourseListProps) => {
         ref={sliderRef}
       >
         {coursesData.map((item, index) => (
-          <Coursecard
-            {...item}
-            index={index}
-            purchased={purchased.some((data) => data.courseId === item.id)}
-          />
+          <div key={index} className="w-full">
+            <Coursecard
+              {...item}
+              index={index}
+              purchased={purchased.some((data) => data.courseId === item.id)}
+            />
+          </div>
         ))}
       </div>
       <div

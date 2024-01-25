@@ -20,14 +20,11 @@ interface CourseListProps {
 
 export const CourseList = ({ coursesData }: CourseListProps) => {
   return (
-    <div
-      className="flex flex-row justify-start items-start flex-wrap gap-5"
-    >
+    <div className="flex flex-row justify-start items-start flex-wrap gap-5">
       {coursesData.map((item, index) => (
-        <Coursecard
-        {...item}
-        index={index}
-      />
+        <div key={index} className="w-full">
+          <Coursecard {...item} index={index} />
+        </div>
       ))}
     </div>
   );
