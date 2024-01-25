@@ -9,7 +9,7 @@ export const Category2 = ({
   return (
     <div className="flex flex-row flex-wrap gap-5 justify-center items-center my-4">
       {category.map((item) => (
-        <Link href={`/main/${item.id}`} key={item.id}>
+        <Link href={`/${item.id}`} key={item.id}>
           <div
             className="px-10 py-5 text-lg font-medium border dark:border-gray-500 w-72 text-center
           hover:bg-purple-700/10 hover:text-purple-700 hover:border-0"

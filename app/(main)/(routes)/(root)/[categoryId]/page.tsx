@@ -34,7 +34,7 @@ export default async function CategoryPage({
   return (
     <div className="w-full h-auto min-h-screen p-10">
       <Link
-        href={`/main`}
+        href={`/`}
         className="flex items-center text-sm hover:opacity-75 transition mb-6 ml-10 w-fit"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />

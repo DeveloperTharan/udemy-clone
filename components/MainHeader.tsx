@@ -8,7 +8,7 @@ import { ThemeSwitcher } from "@/provider/theme-provider";
 import { cn } from "@/lib/utils";
 import { SearchInput } from "./SearchInput";
 import { useUser } from "@/context/userContext";
-import { SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 
 import {
   Avatar,
@@ -41,7 +41,7 @@ export const MainHeader = () => {
       dark:shadow-slate-800"
     >
       <div className="flex flex-row justify-start items-center mr-auto">
-        <Link href={isSignedIn ? "/main" : "/"}>
+        <Link href={isSignedIn ? "/" : "/"}>
           <Image
             src="/logo-black.svg"
             alt="learn"
@@ -50,7 +50,7 @@ export const MainHeader = () => {
             className="dark:hidden"
           />
         </Link>
-        <Link href={isSignedIn ? "/main" : "/"}>
+        <Link href={isSignedIn ? "" : "/"}>
           <Image
             src="/logo-white.svg"
             alt="learn"
@@ -72,7 +72,7 @@ export const MainHeader = () => {
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => router.push("/main")}
+                onClick={() => router.push("/")}
                 className={cn(pathname === "/" ? "hidden" : "")}
               >
                 <LogOut className="h-5 w-5 text-default-400 pointer-events-none flex-shrink-0" />
@@ -91,7 +91,7 @@ export const MainHeader = () => {
           </div>
         ) : null}
         <ThemeSwitcher />
-        {isSignedIn ? (
+        {isSignedIn && (
           <Dropdown placement="bottom-end">
             <DropdownTrigger>
               <Avatar
@@ -133,21 +133,7 @@ export const MainHeader = () => {
                 Log Out
               </DropdownItem>
             </DropdownMenu>
-          </Dropdown>
-        ) : (
-          <>
-            <div className="hidden lg:flex">
-              <SignInButton>
-                <Link role="button">Login</Link>
-              </SignInButton>
-            </div>
-            <div className="hidden md:flex">
-              <Button as={Link} color="primary" variant="flat">
-                <SignUpButton>Sign Up</SignUpButton>
-              </Button>
-            </div>
-          </>
-        )}
+          </Dropdown>)}
       </div>
     </nav>
   );

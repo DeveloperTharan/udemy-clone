@@ -1,3 +1,13 @@
+/**
+ * POST handler for /api/courses/[courseId]/checkout route.
+ *
+ * Handles creating a Stripe checkout session to purchase a course.
+ *
+ * Authenticates the user, validates course exists and not already purchased,
+ * creates a Stripe checkout session, and returns session URL to redirect to.
+ *
+ * Catches and logs errors, returns 500 status on failure.
+ */
 import Stripe from "stripe";
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
@@ -80,8 +90,8 @@ export async function POST(
       customer: stripeCustomer.stripeCustomerId,
       line_items,
       mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/courses/${course.id}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/courses/${course.id}`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/course/${course.id}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/course/${course.id}`,
       metadata: {
         courseId: course.id,
         userId: user.id,

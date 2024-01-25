@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { BookOpen, ChevronRight, ChevronLeft } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Coursecard } from "@/components/card";
 
 interface CourseListProps {
   coursesData: {
@@ -56,41 +56,11 @@ export const CourseList = ({ coursesData, purchased }: CourseListProps) => {
         ref={sliderRef}
       >
         {coursesData.map((item, index) => (
-          <Link href={`/course/${item.id}`} key={item.id}>
-            <Card
-              shadow="sm"
-              key={index}
-              isPressable
-              className="border dark:border-0"
-            >
-              <CardBody className="overflow-visible p-2 w-64">
-                <Image
-                  shadow="sm"
-                  radius="lg"
-                  alt={item.title}
-                  className="w-[280px] object-cover h-[230px]"
-                  src={item.imageUrl ?? ""}
-                />
-              </CardBody>
-              <CardFooter className="text-small flex flex-col gap-y-1 justify-start items-start">
-                <b>{item.title}</b>
-                <p className="text-default-500 italic">{item.category}</p>
-                <div className="flex flex-row my-2 items-center justify-between w-full">
-                  <div className="flex flex-row items-center space-x-3">
-                    <BookOpen className="h-7 w-7 bg-green-600/20 text-green-600 p-1.5 rounded-md" />
-                    <span className="text-default-500">
-                      {item.chapters} chapters
-                    </span>
-                  </div>
-                  <div>
-                    {purchased.some((data) => data.courseId === item.id)
-                      ? <span className="text-gray-500">Paid</span>
-                      : `Price $ ${item.price}`}
-                  </div>
-                </div>
-              </CardFooter>
-            </Card>
-          </Link>
+          <Coursecard
+            {...item}
+            index={index}
+            purchased={purchased.some((data) => data.courseId === item.id)}
+          />
         ))}
       </div>
       <div

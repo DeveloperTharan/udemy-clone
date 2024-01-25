@@ -8,6 +8,7 @@ import { Category2 } from "./_components/Category2";
 import { CourseList } from "./_components/CourseList";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { MainLoadingPage } from "@/components/loadingpage/MainLoadingPage";
 
 export default async function Main() {
   const { userId } = auth();
@@ -48,7 +49,7 @@ export default async function Main() {
       />
       <Carousel />
       {course.length == 0 ? (
-        <div>Loading...</div>
+        <MainLoadingPage />
       ) : (
         <div className="flex flex-col space-y-8 px-5 lg:px-16">
           <h1 className="text-4xl font-extrabold">What to learn next</h1>

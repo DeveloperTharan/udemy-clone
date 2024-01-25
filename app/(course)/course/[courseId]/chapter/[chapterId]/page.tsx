@@ -29,7 +29,7 @@ export default async function ChapterIdPage({
   });
 
   if (!chapter || !course) {
-    return redirect("/main");
+    return redirect("/");
   }
 
   return (

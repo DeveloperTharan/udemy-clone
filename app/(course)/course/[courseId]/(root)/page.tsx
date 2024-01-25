@@ -58,7 +58,7 @@ export default async function CoursePage({
   return (
     <div className="w-full h-auto min-h-screen flex flex-col gapy-y-2 mt-5">
       <Link
-        href={`/main`}
+        href={`/`}
         className="flex items-center text-sm hover:opacity-75 transition mb-6 ml-10"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />

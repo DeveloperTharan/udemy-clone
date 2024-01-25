@@ -31,7 +31,7 @@ export default async function CourseIdPage({
 }) {
   const { userId } = auth();
 
-  if (!userId) redirect("/main");
+  if (!userId) redirect("/");
 
   const course = await db.course.findUnique({
     where: { id: params.courseId, userId },
@@ -55,7 +55,7 @@ export default async function CourseIdPage({
     },
   });
 
-  if (!course) return redirect("/main");
+  if (!course) return redirect("/");
 
   const requiredFields = [
     course.title,

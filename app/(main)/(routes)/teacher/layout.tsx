@@ -18,7 +18,7 @@ export default async function TeacherPage({
   });
 
   if (user?.role !== "TEACHER") {
-    return redirect("/main");
+    return redirect("/");
   }
 
   return (
