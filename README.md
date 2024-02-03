@@ -4,7 +4,7 @@
 Developed a dynamic Udemy clone website,
 meticulously implementing robust functionalities and rolebased authentication for heightened accessibility
 
-* Implemented robust role-based authentication for 
+* Implemented robust role-based authentication for  
   secure access.
 * Utilized Next.js 14 and Tailwind CSS to achieve 
   efficient
