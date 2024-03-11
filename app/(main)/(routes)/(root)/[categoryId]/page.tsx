@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { ArrowLeft, BookOpen } from "lucide-react";
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export default async function CategoryPage({
   params,
@@ -12,6 +13,9 @@ export default async function CategoryPage({
   params: { categoryId: string };
 }) {
   const { userId } = auth();
+
+  if (!userId) return redirect("/");
+
   const res = await db.course.findMany({
     where: {
       categoryId: params.categoryId,
